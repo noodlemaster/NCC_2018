@@ -22,6 +22,13 @@ def frequency(text):
 	#print(probability)
 	return probability
 
+def guessing(text):
+	text = re.sub(r'[^\w\s]','',text)
+	text = text.split(' ')
+	#for each in text:
+	#	if len(each) == 3:
+
+
 def dictionary():
 	pass
 
@@ -45,11 +52,11 @@ def decrypt():
 	index_e = probability.index(maximum_e)
 	maximum_t = sorted(probability)[-2]
 	index_t = probability.index(maximum_t)
-	print(alphabet[index_t])
+	print(index_e, index_t)
 	if alphabet[index_e] != 'E':
 		if maximum_e >= 0.108 and maximum_t >= 0.087:
-			text = re.sub(alphabet[index_e], 'E', text)
-			text = re.sub(alphabet[index_t], 'T', text)
+			text = re.sub(alphabet[index_e], 'T', text)
+			text = re.sub(alphabet[index_t], 'E', text)
 		elif maximum_e >= 0.11 and maximum_t <= 0.087:
 			text = re.sub(alphabet[index_e], 'E', text)
 		else:
