@@ -47,12 +47,39 @@ def x_plus_a(index_e, index_t):
 	a = x_plus_a_check(index_e, index_t)
 	for i in range(0, 26):
 		alphabet_position = (i + a)%26
-		mapping.append([alphabet[i], alphabet[alphabet_position]]) #[encrypt, normal]
+		mapping.append([alphabet[i], alphabet[alphabet_position]]) #[encrypt, decrypt]
 	#print(mapping)
 	return mapping
 	
-def ax_plus_b():
-	pass
+def ax_plus_b_check(index_e, index_t):
+	#[m, m']
+	check = []
+	modulus_inverse = [[1, 1], [3, 9], [5, 21], [7, 15], [9, 3], [11, 19], [15, 7], [17, 23], [19, 11], [21, 5], [23, 17], [25, 25]]
+	m = abs(index_e - index_t)
+	for each in modulus_inverse:
+		if each[0] = m:
+			m_inverse = each[1]
+			check.append(1)
+		else:
+			pass
+	if len(check) == 1:
+		if index_e > index_t:
+			a = ((-15)*m_inverse)%26
+		else:
+			a = (15*m_inverse)%26
+		b = (4 - index_e*a)%26
+		return a,b
+	else:
+		return False
+
+def ax_plus_b(index_e, index_t):
+	mapping = []
+	a, b = ax_plus_b_check(index_e, index_t)[0], ax_plus_b_check(index_e, index_t)[1]
+	for i in range(0, 26):
+		alphabet_position = ((a*i + b))%26
+		mapping.append([alphabet[i]], alphabet[alphabet_position]) #[encrypt, decrypt]
+	#print(mapping)
+	return mapping
 
 def transposition():
 	pass
@@ -73,8 +100,12 @@ def decrypt():
 				for each in x_plus_a(index_e, index_t):
 					old, new = each[0], str.lower(each[1])
 					text = re.sub(old, new, text)
-			else:
-				print('no')
+			elif ax_plus_b_check(index_e, index_t):
+				for each in ax_plus_b(index_e, index_t):
+					old, new = each[0], str.lower(each[1])
+					text = re.sub(old, new, text)
+			else: #maybe guessing or dictionary
+				print('iii')
 		elif maximum_e >= 0.11 and maximum_t <= 0.087:
 			text = re.sub(alphabet[index_e], 'E', text)
 		else:
@@ -82,7 +113,7 @@ def decrypt():
 	else:
 		transposition()
 	
-	print(text)
+	#print(text)
 
 if __name__ == '__main__':
 	decrypt()
