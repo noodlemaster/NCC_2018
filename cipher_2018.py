@@ -32,10 +32,25 @@ def guessing(text):
 def dictionary():
 	pass
 
-def x_plus_a(index_e, index_t):
-	a_1 = index_e - 4
-	a_2 = index_t - 19 
+def x_plus_a_check(index_e, index_t):
+	if index_e > 4:
+		a = 26 - (index_e - 4)
+	else:
+		a = 4 - index_e
+	if (index_t + a)%26 == 19: #check with t
+		return a
+	else:
+		return False
 
+def x_plus_a(index_e, index_t):
+	mapping = []
+	a = x_plus_a_check(index_e, index_t)
+	for i in range(0, 26):
+		alphabet_position = (i + a)%26
+		mapping.append([alphabet[i], alphabet[alphabet_position]]) #[encrypt, normal]
+	#print(mapping)
+	return mapping
+	
 def ax_plus_b():
 	pass
 
@@ -52,11 +67,14 @@ def decrypt():
 	index_e = probability.index(maximum_e)
 	maximum_t = sorted(probability)[-2]
 	index_t = probability.index(maximum_t)
-	print(index_e, index_t)
 	if alphabet[index_e] != 'E':
 		if maximum_e >= 0.108 and maximum_t >= 0.087:
-			text = re.sub(alphabet[index_e], 'T', text)
-			text = re.sub(alphabet[index_t], 'E', text)
+			if x_plus_a_check(index_e, index_t):
+				for each in x_plus_a(index_e, index_t):
+					old, new = each[0], str.lower(each[1])
+					text = re.sub(old, new, text)
+			else:
+				print('no')
 		elif maximum_e >= 0.11 and maximum_t <= 0.087:
 			text = re.sub(alphabet[index_e], 'E', text)
 		else:
@@ -68,3 +86,5 @@ def decrypt():
 
 if __name__ == '__main__':
 	decrypt()
+	#x_plus_a_check(15, 4)
+	#x_plus_a(15, 4)
