@@ -4,7 +4,7 @@ def removespace(text):
     textnospace = []
     for c in text:
         if c.isalpha():
-            textnospace.append(c)
+            textnospace.append(c.lower())
     return textnospace
 
 def textksplit(text, n):

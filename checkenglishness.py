@@ -23,9 +23,15 @@ def countngram(text, n, list):
 
     return bigram_count
 
-def checkenglishnes(text):
-    score = 0
-
+def checkenglishnes(percentage, data):
+    score = 0.00000000000
+    if len(data) != len(percentage):
+        return score
+    for i in range(len(data)):
+        if percentage[i] > data[i][1]:
+            score += 1
+        else:
+            score += (percentage[i]/data[i][1])**2
     return score
 
 if __name__ == '__main__':
