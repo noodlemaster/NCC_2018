@@ -1,12 +1,5 @@
 import itertools
-from checkenglishness import *
-
-def extract_alphabet(text):
-    textnospace = []
-    for c in text:
-        if c.isalpha():
-            textnospace.append(c.lower())
-    return textnospace
+from checkenglishness import get_all_english_score_in_text
 
 def get_factors(n):
     factors = []
@@ -14,6 +7,13 @@ def get_factors(n):
         if n%(i+1) == 0:
             factors.append(i + 1)
     return factors
+
+def extract_alphabets(text):
+    textnospace = []
+    for c in text:
+        if c.isalpha():
+            textnospace.append(c.lower())
+    return textnospace
 
 def groupcharactors(text, n):
     table = []
@@ -27,48 +27,71 @@ def groupcharactors(text, n):
         table.append(row)
     return table
 
-def generate_permutation(num):
-    return list(itertools.permutations(range(num)))
-
-def swape_colume(table, c):
+def swape_colume(table, conbination):
     newtable = []
     for row in table:
         newrow = []
-        for n in c:
+        for n in conbination:
             newrow.append(row[n])
         newtable.append(newrow)
     return newtable
 
 def return_to_text(table):
-    text = []
+    text = ''
     for row in table:
         for c in row:
-            text.append(c)
+            text += c
     return text
 
+def generate_permutation(num):
+    return list(itertools.permutations(range(num)))
+
+def decrypt_transposition(text, combination):
+    plaintext = extract_alphabets(text)
+    table = groupcharactors(plaintext, len(combination))
+    arranged_table = swape_colume(table, combination)
+    answer = return_to_text(arranged_table)
+    return answer
 
 if __name__ == '__main__':
-    text = "SIEID ATTPW ADIVL SOLWO IYMRD AOSTT TDUHM AGTTT HSEOO  TAEST EOGNU AEDLN HNRDH KIWOA MENEE INEAS NPAIT SLIAI  AOJDN TCAET SOKEE EIULD HRAUE WSYSA IRBCT WNNSN TARHH  SUHAS MNOAG SVEPI AGINE IOAIS EBGRS TTWYO GTLNO EVMRT  WGTOI SAHHI ECAWP HTRAO TCRTS YRBYG  "
-    plaintext = extract_alphabet(text)
-    # factors = get_factors(len(plaintext))
-    # for i in range(1, len(factors)-1):
-    #     print(groupcharactors(plaintext, factors[i]))
+    inputfile = open('questions/example/transposition.txt', 'r')
+    text = inputfile.read()
+    inputfile.close()
 
-    file = open('output.txt', 'w')
+    #getting answer from the known combination
+    # a = 5
+    # b = 4
+    # c = 6
+    # d = 6
+    # e = 3
+    # f = 0
+    # g = 2
+    # answer = decrypt_transposition(text, [a,b,c,d,e,f,g])
+    # print(answer)
+    # print(get_all_english_score_in_text(answer))
 
-    #Lets say we know the factor is 7
-    f = 7
-    table = groupcharactors(plaintext, f)
-    # print(table)
+    outputfile = open('output.txt', 'w')
 
-
-    for combination in generate_permutation(f):
-        arranged_table = swape_colume(table, combination)
-
-        text = return_to_text(arranged_table)
-        score = get_english_score(text)
-        file.write(str(score) + "," + str(combination) + "\n")
-
+    plaintext = extract_alphabets(text)
+    factors = get_factors(len(plaintext))
+    max_columns = 10
+    factors_to_check = []
+    for f in factors:
+        if f > max_columns:
+            break
+        else:
+            factors_to_check.append(f)
+    factors_to_check.pop(0) #remove one
+    for f in factors_to_check:
+        table = groupcharactors(plaintext, f)
+        for combination in generate_permutation(f):
+            arranged_table = swape_colume(table, combination)
+            answer = return_to_text(arranged_table)
+            score = get_all_english_score_in_text(answer)
+            outputfile.write(str(score) + ", ")
+            for c in combination:
+                outputfile.write(str(c) + ", ")
+            outputfile.write("\n")
 
     # list_tables = []
     # for combination in generate_permutation(f):
@@ -77,11 +100,7 @@ if __name__ == '__main__':
     # for table in list_tables:
     #     text = return_to_text(table)
     #     score = get_english_score(text)
-    #     file.write(str(score) + "," + str(combination) + "\n")
-
-file.close()
-
-
+    #     outputfile.write(str(score) + "," + str(combination) + "\n")
 
 
 
