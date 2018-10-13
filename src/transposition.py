@@ -1,5 +1,5 @@
 import itertools
-from checkenglishness import get_all_english_score_in_text, get_english_score
+from src.checkenglishness import get_all_english_score_in_text, get_english_score
 
 def get_factors(n):
     factors = []
@@ -57,7 +57,7 @@ def decrypt_transposition(text, combination):
     return answer
 
 if __name__ == '__main__':
-    inputfile = open('questions/example/transposition.txt', 'r')
+    inputfile = open('../questions/2017/5a.txt', 'r')
     text = inputfile.read()
     inputfile.close()
 
@@ -78,7 +78,7 @@ if __name__ == '__main__':
     plaintext = extract_alphabets(text)
     factors = get_factors(len(plaintext))
 
-    max_columns = 7
+    max_columns = 6
 
     factors_to_check = []
     for f in factors:
@@ -105,7 +105,8 @@ if __name__ == '__main__':
             results.append(result)
 
     #Show results
-    numbertop = 3
+    numbertop = 5
+
     topnumbers = []
     for i in range(numbertop):
         biggest = []
@@ -119,5 +120,5 @@ if __name__ == '__main__':
         results.remove(biggest)
     print(topnumbers)
     for result in topnumbers:
-        print(round(result[0], 2), end='')
+        print(round(result[0], 2), end=', ')
         print(decrypt_transposition(text, result[1]))

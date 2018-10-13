@@ -46,7 +46,7 @@ def get_english_score_trigram(text):
 def get_english_score(text):
     biscore = checkenglishnes(countngram(removespace(text), 2, bigrams), bigrams)
     triscore = checkenglishnes(countngram(removespace(text), 3, trigrams), trigrams)
-    score = biscore * 0.4 + triscore * 0.6
+    score = biscore * 2 + triscore * 5
     return score
 
 def get_all_english_score_in_text(text):
@@ -56,7 +56,7 @@ def get_all_english_score_in_text(text):
     return str(round(score, 2)) + ", " + str(round(biscore, 2)) + ", " + str(round(triscore, 2))
 
 if __name__ == '__main__':
-    file = open('questions/2018/1a.txt', 'r')
+    file = open('../questions/example/transposition_bbc.txt', 'r')
     text = file.read()
     file.close()
     print(get_english_score(text))

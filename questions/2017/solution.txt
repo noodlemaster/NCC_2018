@@ -1,0 +1,6 @@
+1a: x+a a=5
+1b: x+a a=17
+2a:
+2b: Transposition of 6, but no column mixing
+3a: ax+b a=15, b=22
+3b:
