@@ -8,13 +8,13 @@ def extract_alphabets(text):
             textnospace.append(c.lower())
     return textnospace
 
-def textksplit(text, n):
+def textksplit(text, k):
     listofchars = []
-    for r in range(n):
+    for r in range(k):
         chars = []
-        for i in range(math.ceil(len(text)/n)):
+        for i in range(math.ceil(len(text)/k)):
             try:
-                chars.append(text[i*n+r])
+                chars.append(text[i*k+r])
             except IndexError:
                 pass
         listofchars.append(chars)
@@ -65,8 +65,9 @@ def get_average_ioc_from_1_to_k(text, k):
     return ioc_list
 
 if __name__ == '__main__':
-    file = open('questions/2017/5a.txt', 'r')
+    # file = open('questions/example/vigenere.txt', 'r')
+    file = open('questions/2017/3b.txt', 'r')
     text = file.read()
     file.close()
-    print(get_first_ioc_from_1_to_k(text, 18))
-    print(get_average_ioc_from_1_to_k(text, 18))
+    print(get_first_ioc_from_1_to_k(text, 25))
+    print(get_average_ioc_from_1_to_k(text, 25))

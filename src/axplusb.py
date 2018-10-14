@@ -24,7 +24,7 @@ def decrypt_mapping(text, mapping):
     return text
 
 if __name__ == '__main__':
-    file = open('../questions/2017/5a.txt', 'r')
+    file = open('../questions/2017/2a.txt', 'r')
     text = file.read()
     file.close()
     #x+a

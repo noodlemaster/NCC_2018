@@ -3,7 +3,7 @@ import re
 alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
             'V', 'W', 'X', 'Y', 'Z']
 
-def frequency(text):
+def get_frequency(text):
     freq_character = []
     # text = extract_text()
     for j in alphabet:
@@ -18,7 +18,7 @@ def frequency(text):
     return probability
 
 def frequency_analysis(text):
-    probability = frequency(text)
+    probability = get_frequency(text)
     letter_freq = [0.08167, 0.01492, 0.02782, 0.04253, 0.12702, 0.02228, 0.02015, 0.06094,
                    0.00153, 0.0772, 0.04025, 0.02406, 0.06749, 0.07507, 0.01925, 0.0095,
                    0.05987, 0.06327, 0.09056, 0.02758, 0.00978, 0.0236, 0.0015, 0.01974, 0.00074]
