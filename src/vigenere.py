@@ -1,4 +1,5 @@
 import math
+from src.axplusb import decipher_x_plus_a_by_frequency
 alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
 def extract_alphabets(text):
@@ -8,13 +9,13 @@ def extract_alphabets(text):
             textnospace.append(c.lower())
     return textnospace
 
-def textksplit(text, n):
+def textksplit(text, k):
     listofchars = []
-    for r in range(n):
+    for r in range(k):
         chars = []
-        for i in range(math.ceil(len(text)/n)):
+        for i in range(math.ceil(len(text)/k)):
             try:
-                chars.append(text[i*n+r])
+                chars.append(text[i*k+r])
             except IndexError:
                 pass
         listofchars.append(chars)
@@ -65,8 +66,33 @@ def get_average_ioc_from_1_to_k(text, k):
     return ioc_list
 
 if __name__ == '__main__':
-    file = open('questions/2017/5a.txt', 'r')
+    file = open('../questions/example/vigenere.txt', 'r')
     text = file.read()
     file.close()
-    print(get_first_ioc_from_1_to_k(text, 18))
-    print(get_average_ioc_from_1_to_k(text, 18))
+    # print(get_first_ioc_from_1_to_k(text, 18))
+    # print(get_average_ioc_from_1_to_k(text, 18))
+    iocs = get_average_ioc_from_1_to_k(text, 10)
+    min_ioc_percent = 20
+    best_ioc = -1
+    for ioc in iocs:
+        error = math.fabs(ioc - 0.0686)/0.0686
+        if  error < min_ioc_percent:
+            min_ioc_percent = error
+            best_ioc = ioc
+    k = iocs.index(best_ioc) + 1
+    list_texts = textksplit(extract_alphabets(text), k)
+
+    deciphered_texts = []
+    for list_text in list_texts:
+        answer = decipher_x_plus_a_by_frequency(''.join(list_text))
+        deciphered_texts.append(answer)
+    length = 0
+    for deciphered_text in deciphered_texts:
+        length += len(deciphered_text)
+    answer = ""
+    for i in range(length):
+        a = i%k
+        b = (i-(i%k))/k
+        answer += deciphered_texts[(i%k)][int((i-(i%k))/k)]
+    print(answer)
+
