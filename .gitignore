@@ -1,0 +1,6 @@
+output.txt
+.idea/
+_pycache_/
+/src/_pycache_/
+/scr/output.txt
+.DS_Store

@@ -82,9 +82,9 @@ def generate_keys_2x2():
 			for k in range(0, 25):
 				for p in range(0, 25):
 					possible_keyword = alphabet[i] + alphabet[j] + alphabet[k] + alphabet[p]
-					possible_matrix = [[i, j], [k, p]]
-					det = det_2x2(possible_matrix)
 					if is_english_word().check(str.lower(possible_keyword)):
+						possible_matrix = [[i, j], [k, p]]
+						det = det_2x2(possible_matrix)
 						if hill_check(det):
 							inv = invert_2x2_undermod26(possible_matrix, det)
 							possible_key.append(inv)
@@ -126,9 +126,11 @@ if __name__ == '__main__':
 	file = open('./questions/example/hill2x2.txt', 'r')
 	text = file.read()
 	file.close()
-	hill_2x2(text)
+	#hill_2x2(text)
 	#n = 2
 	#print(group_text(text, n))
 	#text2matrix_2x2(group_text(text, n))
 	#print(textksplit(text, 6))
 	#invert_2x2([[3, 2], [-1, 1]], 5)
+	is_english_word()
+	print(is_english_word().check('APPLE'))
