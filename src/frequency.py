@@ -3,19 +3,19 @@ import re
 alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
             'V', 'W', 'X', 'Y', 'Z']
 
-def get_frequency(text):
-    freq_character = []
-    # text = extract_text()
-    for j in alphabet:
-        result = re.findall(j, text)
-        freq_character.append(len(result))
-    probability = []
-    PlainText = re.sub(r'\W', '', text)
-    total_cahracter = len(PlainText)
-    for each in freq_character:
-        probability.append(int(each) / total_cahracter)
-    #print(probability)
-    return probability
+# def get_frequency(text):
+#     freq_character = []
+#     # text = extract_text()
+#     for j in alphabet:
+#         result = re.findall(j, text)
+#         freq_character.append(len(result))
+#     probability = []
+#     PlainText = re.sub(r'\W', '', text)
+#     total_cahracter = len(PlainText)
+#     for each in freq_character:
+#         probability.append(int(each) / total_cahracter)
+#     #print(probability)
+#     return probability
 
 def count_alphabet(text, alphabet):
     alphabet_count = [0] * len(alphabet)

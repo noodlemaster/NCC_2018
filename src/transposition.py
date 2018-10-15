@@ -56,38 +56,17 @@ def decrypt_transposition(text, combination):
     answer = return_to_text(arranged_table)
     return answer
 
-if __name__ == '__main__':
-    # inputfile = open('../questions/2017/5a.txt', 'r')
-    inputfile = open('../questions/example/transposition.txt', 'r')
-    text = inputfile.read()
-    inputfile.close()
-
-    #getting answer from the known combination
-    # a = 5
-    # b = 4
-    # c = 6
-    # d = 6
-    # e = 3
-    # f = 0
-    # g = 2
-    # answer = decrypt_transposition(text, [a,b,c,d,e,f,g])
-    # print(answer)
-    # print(get_all_english_score_in_text(answer))
-
+def decrypt_all_trasposition(text, max_columns = 7):
     outputfile = open('output.txt', 'w')
-
     plaintext = extract_alphabets(text)
     factors = get_factors(len(plaintext))
-
-    max_columns = 7
-
     factors_to_check = []
     for f in factors:
         if f > max_columns:
             break
         else:
             factors_to_check.append(f)
-    factors_to_check.pop(0) #remove one
+    factors_to_check.pop(0)  # remove one
     results = []
     for f in factors_to_check:
         table = groupcharactors(plaintext, f)
@@ -104,10 +83,9 @@ if __name__ == '__main__':
                 outputfile.write(str(c) + ", ")
             outputfile.write("\n")
             results.append(result)
+    return results
 
-    #Show results
-    numbertop = 5
-
+def display_top_result(results, numbertop = 5):
     topnumbers = []
     for i in range(numbertop):
         biggest = []
@@ -123,3 +101,10 @@ if __name__ == '__main__':
     for result in topnumbers:
         print(round(result[0], 2), end=', ')
         print(decrypt_transposition(text, result[1]))
+
+if __name__ == '__main__':
+    inputfile = open('../questions/example/transposition.txt', 'r')
+    text = inputfile.read()
+    inputfile.close()
+
+    display_top_result(decrypt_all_trasposition(text))
