@@ -1,5 +1,5 @@
 import math
-from src.axplusb import decipher_x_plus_a_by_frequency
+from src.affine import decipher_x_plus_a_by_frequency
 alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
 def extract_alphabets(text):
@@ -66,14 +66,6 @@ def get_average_ioc_from_1_to_k(text, k):
     return ioc_list
 
 if __name__ == '__main__':
-<<<<<<< HEAD:vigenere.py
-    # file = open('questions/example/vigenere.txt', 'r')
-    file = open('questions/2017/3b.txt', 'r')
-    text = file.read()
-    file.close()
-    print(get_first_ioc_from_1_to_k(text, 25))
-    print(get_average_ioc_from_1_to_k(text, 25))
-=======
     file = open('../questions/example/vigenere.txt', 'r')
     text = file.read()
     file.close()
@@ -103,5 +95,3 @@ if __name__ == '__main__':
         b = (i-(i%k))/k
         answer += deciphered_texts[(i%k)][int((i-(i%k))/k)]
     print(answer)
-
->>>>>>> 17c2493e4cfabf8e56b22bbd9ba4bec90da71208:src/vigenere.py

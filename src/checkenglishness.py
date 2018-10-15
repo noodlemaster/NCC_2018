@@ -31,8 +31,8 @@ def checkenglishnes(percentage, data):
         if percentage[i] > data[i][1]:
             score += 1
         else:
-            # score += (percentage[i]/data[i][1])**2
-            score += percentage[i]
+            score += (percentage[i]**2/data[i][1])
+            # score += percentage[i]
     return score
 
 def get_english_score_bigram(text):

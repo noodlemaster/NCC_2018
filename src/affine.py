@@ -57,17 +57,9 @@ def decrypt_mapping(text, mapping):
         text = re.sub(old, new, text)
     return text
 
-<<<<<<< HEAD
-if __name__ == '__main__':
-    file = open('../questions/2017/2a.txt', 'r')
-    text = file.read()
-    file.close()
-    #x+a
-=======
 
 def decipher_by_english_check(text):
     # x+a
->>>>>>> 17c2493e4cfabf8e56b22bbd9ba4bec90da71208
     # for a in range(26):
     #     # print(a, end='  ')
     #     result = []
@@ -128,9 +120,11 @@ def decipher_x_plus_a_by_frequency(text):
         return False
 
 if __name__ == '__main__':
-    file = open('../questions/2018/1a.txt', 'r')
+    file = open('../questions/2018/2a.txt', 'r')
     text = file.read()
     file.close()
 
     #decipher_by_english_check(text)
-    print(decipher_x_plus_a_by_frequency(text))
+    # print(decipher_x_plus_a_by_frequency(text))
+    for i in range(11):
+        print(decrypt_mapping(text, get_map_of_x_plus_a(i)))

@@ -57,7 +57,8 @@ def decrypt_transposition(text, combination):
     return answer
 
 if __name__ == '__main__':
-    inputfile = open('../questions/2017/5a.txt', 'r')
+    # inputfile = open('../questions/2017/5a.txt', 'r')
+    inputfile = open('../questions/example/transposition.txt', 'r')
     text = inputfile.read()
     inputfile.close()
 
@@ -78,7 +79,7 @@ if __name__ == '__main__':
     plaintext = extract_alphabets(text)
     factors = get_factors(len(plaintext))
 
-    max_columns = 6
+    max_columns = 7
 
     factors_to_check = []
     for f in factors:
