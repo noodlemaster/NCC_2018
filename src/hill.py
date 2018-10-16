@@ -117,9 +117,8 @@ def hill_2x2(text):
             print([top_score[index], result_list[index]])
 
 if __name__ == '__main__':
-    file = open('./questions/example/hill2x2.txt', 'r') #Keyword: READ
-    # #Keyword for this question is HILL
-    # #file = open('./questions/example/hill2x2simple.txt', 'r')
+    # file = open('./questions/example/hill2x2.txt', 'r') #Keyword: READ
+    file = open('./questions/example/hill2x2simple.txt', 'r')
     text = file.read()
     file.close()
 
