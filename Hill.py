@@ -76,23 +76,43 @@ def matrix_multiplication_2x2_2x1_undermod26(twobytwo, twobyone):
     return matrix
 
 def generate_keys_2x2():
+    # word_file = open('./data/words/length/google/4.txt', 'r')
+    word_file = open('./data/words/length/firefox/4.txt', 'r')
+    keys = word_file.readlines()
+    word_file.close()
     possible_key = []
-    for i in range(0, 25):
-        for j in range(0, 25):
-            for k in range(0, 25):
-                for p in range(0, 25):
-                    possible_keyword = alphabet[i] + alphabet[j] + alphabet[k] + alphabet[p]
-                    if is_english_word().check(str.lower(possible_keyword)):
-                        possible_matrix = [[i, j], [k, p]]
-                        det = det_2x2(possible_matrix)
-                        if hill_check(det):
-                            inv = invert_2x2_undermod26(possible_matrix, det)
-                            possible_key.append(inv)
-                        else:
-                            pass
-                    else:
-                        pass
+    for keyword in keys:
+        i = alphabet.index(keyword[0].upper())
+        j = alphabet.index(keyword[1].upper())
+        k = alphabet.index(keyword[2].upper())
+        p = alphabet.index(keyword[3].upper())
+        possible_matrix = [[i, j], [k, p]]
+        det = det_2x2(possible_matrix)
+        if hill_check(det):
+            inv = invert_2x2_undermod26(possible_matrix, det)
+            possible_key.append(inv)
+        else:
+            pass
     return possible_key
+
+# def generate_keys_2x2():
+#     possible_key = []
+#     for i in range(0, 25):
+#         for j in range(0, 25):
+#             for k in range(0, 25):
+#                 for p in range(0, 25):
+#                     possible_keyword = alphabet[i] + alphabet[j] + alphabet[k] + alphabet[p]
+#                     if is_english_word().check(str.lower(possible_keyword)):
+#                         possible_matrix = [[i, j], [k, p]]
+#                         det = det_2x2(possible_matrix)
+#                         if hill_check(det):
+#                             inv = invert_2x2_undermod26(possible_matrix, det)
+#                             possible_key.append(inv)
+#                         else:
+#                             pass
+#                     else:
+#                         pass
+#     return possible_key
 
 def hill_2x2(text):
     matrix_list = text2matrix_2x2(group_text(text, 2))
@@ -116,21 +136,22 @@ def hill_2x2(text):
 
     result = []
     for i in range(1, howmany):
-        index = sorted(top_score)[-i]
+        highscore = sorted(top_score)[-i]
+        index = top_score.index(highscore)
         if isinstance(index, int):
             result.append([top_score[index], result_list[index]])
     for each in result:
         print(each)
 
 if __name__ == '__main__':
-    file = open('./questions/example/hill2x2.txt', 'r')
+    # file = open('./questions/example/hill2x2.txt', 'r')
+    #Keyword for this question is HILL
+    file = open('./questions/example/hill2x2simple.txt', 'r')
     text = file.read()
     file.close()
-    # hill_2x2(text)
+    hill_2x2(text)
     # n = 2
     # print(group_text(text, n))
     # text2matrix_2x2(group_text(text, n))
     # print(textksplit(text, 6))
     # invert_2x2([[3, 2], [-1, 1]], 5)
-    is_english_word()
-    print(is_english_word().check('APPLE'))
