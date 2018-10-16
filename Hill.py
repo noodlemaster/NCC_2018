@@ -1,6 +1,5 @@
 import re
-from src.checkenglishness import get_all_english_score_in_text, get_english_score
-import enchant
+from src.checkenglishness import get_english_score
 
 alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
             'V', 'W', 'X', 'Y', 'Z']
@@ -16,15 +15,15 @@ def det_2x2(matrix):
 def invert_2x2_undermod26(matrix, det):
     modulus_inverse = [[1, 1], [3, 9], [5, 21], [7, 15], [9, 3], [11, 19], [15, 7], [17, 23], [19, 11], [21, 5],
                        [23, 17], [25, 25]]
-    det = det % 26
+    det1 = det % 26
     for each in modulus_inverse:
-        if each[0] == det:
+        if each[0] == det1:
             det_inverse = each[1]
         else:
             pass
     a = (((matrix[0][0]) % 26) * det_inverse) % 26
-    b = (((matrix[0][1]) % 26) * det_inverse) % 26
-    c = (((matrix[1][0]) % 26) * det_inverse) % 26
+    b = (((-(matrix[0][1])) % 26) * det_inverse) % 26
+    c = (((-(matrix[1][0])) % 26) * det_inverse) % 26
     d = (((matrix[1][1]) % 26) * det_inverse) % 26
     inv = [[d, b], [c, a]]
     return inv
@@ -34,10 +33,6 @@ def hill_check(det):
         return True
     else:
         return False
-
-def is_english_word():
-    dict = enchant.Dict("en_GB")
-    return dict
 
 def group_text(text, n):
     list_grouped = []
@@ -95,25 +90,6 @@ def generate_keys_2x2():
             pass
     return possible_key
 
-# def generate_keys_2x2():
-#     possible_key = []
-#     for i in range(0, 25):
-#         for j in range(0, 25):
-#             for k in range(0, 25):
-#                 for p in range(0, 25):
-#                     possible_keyword = alphabet[i] + alphabet[j] + alphabet[k] + alphabet[p]
-#                     if is_english_word().check(str.lower(possible_keyword)):
-#                         possible_matrix = [[i, j], [k, p]]
-#                         det = det_2x2(possible_matrix)
-#                         if hill_check(det):
-#                             inv = invert_2x2_undermod26(possible_matrix, det)
-#                             possible_key.append(inv)
-#                         else:
-#                             pass
-#                     else:
-#                         pass
-#     return possible_key
-
 def hill_2x2(text):
     matrix_list = text2matrix_2x2(group_text(text, 2))
     possible_key = generate_keys_2x2()
@@ -134,24 +110,19 @@ def hill_2x2(text):
 
     howmany = 5
 
-    result = []
-    for i in range(1, howmany):
+    for i in range(1, howmany+1):
         highscore = sorted(top_score)[-i]
         index = top_score.index(highscore)
         if isinstance(index, int):
-            result.append([top_score[index], result_list[index]])
-    for each in result:
-        print(each)
+            print([top_score[index], result_list[index]])
 
 if __name__ == '__main__':
-    # file = open('./questions/example/hill2x2.txt', 'r')
-    #Keyword for this question is HILL
-    file = open('./questions/example/hill2x2simple.txt', 'r')
+    file = open('./questions/example/hill2x2.txt', 'r') #Keyword: READ
+    # #Keyword for this question is HILL
+    # #file = open('./questions/example/hill2x2simple.txt', 'r')
     text = file.read()
     file.close()
+
+    #text = 'APADJ TFTWLFJ'
     hill_2x2(text)
-    # n = 2
-    # print(group_text(text, n))
-    # text2matrix_2x2(group_text(text, n))
-    # print(textksplit(text, 6))
-    # invert_2x2([[3, 2], [-1, 1]], 5)
+
