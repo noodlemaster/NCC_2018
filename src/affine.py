@@ -1,6 +1,6 @@
 import re
 from src.checkenglishness import get_english_score
-from src.frequency import frequency, frequency_analysis
+from src.frequency import get_frequency, frequency_analysis
 
 alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
@@ -120,7 +120,7 @@ def decipher_x_plus_a_by_frequency(text):
         return False
 
 if __name__ == '__main__':
-    file = open('../questions/2018/2a.txt', 'r')
+    file = open('../questions/2017/3a.txt', 'r')
     text = file.read()
     file.close()
 
