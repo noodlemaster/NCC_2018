@@ -3,4 +3,14 @@
 2a: Keyword cipher keyword = CAIRO and starts from f = E
 2b: Transposition of 6, but no column mixing
 3a: ax+b a=15, b=22
-3b:
+3b: Polybius cipher
+4a: random substitution GAZFREQUNSLIBYCM_XTKHOPJV_, bmo_fdaulxtkpivwgejshy_rnc
+4b: The Vigenère cipher
+5a:
+5b:
+6a:
+6b:
+7a:
+7b:
+8a:
+8b:

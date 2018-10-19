@@ -21,7 +21,7 @@ def count_alphabet(text, alphabet):
     alphabet_count = [0] * len(alphabet)
     for i in range(len(alphabet)):
         for c in text:
-            if c == alphabet[i].lower():
+            if c.lower() == alphabet[i].lower():
                 alphabet_count[i] += 1
     return alphabet_count
 
@@ -48,6 +48,11 @@ def frequency_analysis(text):
     return index_e, index_t
 
 if __name__ == '__main__':
-    text = 'XSFJD JMNRF RUDJV LMYFT GWWHP T'
-    #frequency(text)
-    frequency_analysis(text)
+    file = open('../questions/2017/4a.txt', 'r')
+    text = file.read()
+    file.close()
+    frequency = get_frequency(text)
+    for i in range(len(frequency)):
+        print(alphabet[i] + ", " + str(frequency[i]))
+    print("(e, t)")
+    print(frequency_analysis(text))

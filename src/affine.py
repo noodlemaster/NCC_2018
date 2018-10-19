@@ -1,6 +1,6 @@
 import re
 from src.checkenglishness import get_english_score
-from src.frequency import frequency, frequency_analysis
+from src.frequency import get_frequency, frequency_analysis
 
 alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
@@ -112,7 +112,7 @@ def decipher_ax_plus_b_by_frequency(text):
 def decipher_x_plus_a_by_frequency(text):
     index_e, index_t = frequency_analysis(text)
     a = x_plus_a_check(index_e, index_t)
-    if a:
+    if not isinstance(a, bool):
         mapping = get_map_of_x_plus_a(a)
         text_decrypted = decrypt_mapping(text, mapping)
         return text_decrypted
@@ -120,11 +120,12 @@ def decipher_x_plus_a_by_frequency(text):
         return False
 
 if __name__ == '__main__':
-    file = open('../questions/2018/2a.txt', 'r')
+    file = open('../questions/2017/3a.txt', 'r')
     text = file.read()
     file.close()
 
     #decipher_by_english_check(text)
-    # print(decipher_x_plus_a_by_frequency(text))
-    for i in range(11):
-        print(decrypt_mapping(text, get_map_of_x_plus_a(i)))
+    print(decipher_ax_plus_b_by_frequency(text))
+    print(decipher_by_english_check(text))
+    # for i in range(11):
+    #     print(decrypt_mapping(text, get_map_of_x_plus_a(i)))
