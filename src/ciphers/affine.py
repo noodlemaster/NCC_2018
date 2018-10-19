@@ -1,6 +1,6 @@
 import re
-from src.checkenglishness import get_english_score
-from src.frequency import get_frequency, frequency_analysis
+from src.tools.checkenglishness import get_english_score
+from src.tools.frequency import frequency_analysis
 
 alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 

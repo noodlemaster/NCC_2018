@@ -1,5 +1,5 @@
 import itertools
-from src.checkenglishness import get_all_english_score_in_text, get_english_score
+from src.tools.checkenglishness import get_all_english_score_in_text, get_english_score
 
 def get_factors(n):
     factors = []

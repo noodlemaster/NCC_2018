@@ -1,6 +1,6 @@
 import itertools
-from src.hill import *
-from src.checkenglishness import *
+from src.ciphers.hill import *
+from src.tools.checkenglishness import *
 
 standard_noJ = [[], ['', 'A', 'B', 'C', 'D', 'E'], ['', 'F', 'G', 'H', 'I', 'K'], ['', 'L', 'M', 'N', 'O', 'P'], ['','Q', 'R', 'S', 'T', 'U'], ['','V', 'W', 'X', 'Y', 'Z']]
 standard_noZ = [[], ['', 'A', 'B', 'C', 'D', 'E'], ['', 'F', 'G', 'H', 'I', 'J'], ['', 'K', 'L', 'M', 'N', 'O'], ['','P', 'Q', 'R', 'S', 'T'], ['','U', 'V', 'W', 'X', 'Y']]

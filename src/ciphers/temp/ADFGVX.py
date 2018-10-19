@@ -1,6 +1,5 @@
 import re
-from textksplit import *
-from src.transposition import *
+from src.ciphers.transposition import *
 # from transposition import *
 
 template = []
