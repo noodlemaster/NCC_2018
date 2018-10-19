@@ -121,7 +121,5 @@ if __name__ == '__main__':
     file = open('./questions/example/hill2x2simple.txt', 'r')
     text = file.read()
     file.close()
-
-    #text = 'APADJ TFTWLFJ'
     hill_2x2(text)
 
