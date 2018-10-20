@@ -1,5 +1,10 @@
 output.txt
 .idea/
+<<<<<<< HEAD
 _pycache_/
 src/__pycache__/
 .DS_Store
+=======
+__pycache__
+.DS_Store
+>>>>>>> 1eeb0a96253c2bb088ed0f769d133b8f9990e35b

@@ -1,7 +1,11 @@
 import re
+<<<<<<< HEAD:ADFGVX.py
 from textksplit import *
 from Hill import *
 from src.transposition import *
+=======
+from src.ciphers.transposition import *
+>>>>>>> 1eeb0a96253c2bb088ed0f769d133b8f9990e35b:src/ciphers/temp/ADFGVX.py
 # from transposition import *
 
 template = []

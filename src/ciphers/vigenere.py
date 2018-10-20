@@ -1,5 +1,5 @@
 import math
-from src.affine import decipher_x_plus_a_by_frequency
+from src.ciphers.affine import decipher_x_plus_a_by_frequency
 alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
 def extract_alphabets(text):
@@ -66,12 +66,13 @@ def get_average_ioc_from_1_to_k(text, k):
     return ioc_list
 
 if __name__ == '__main__':
-    file = open('../questions/example/vigenere.txt', 'r')
+    # file = open('../questions/example/vigenere.txt', 'r')
+    file = open('../questions/2017/4b.txt', 'r')
     text = file.read()
     file.close()
-    # print(get_first_ioc_from_1_to_k(text, 18))
-    # print(get_average_ioc_from_1_to_k(text, 18))
-    iocs = get_average_ioc_from_1_to_k(text, 10)
+    print(get_first_ioc_from_1_to_k(text, 30))
+    print(get_average_ioc_from_1_to_k(text, 30))
+    iocs = get_average_ioc_from_1_to_k(text, 30)
     min_ioc_percent = 20
     best_ioc = -1
     for ioc in iocs:

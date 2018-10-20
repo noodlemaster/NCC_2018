@@ -1,6 +1,6 @@
 import itertools
-from src.hill import *
-from src.checkenglishness import *
+from src.ciphers.hill import *
+from src.tools.checkenglishness import *
 
 standard_noJ = [[], ['', 'A', 'B', 'C', 'D', 'E'], ['', 'F', 'G', 'H', 'I', 'K'], ['', 'L', 'M', 'N', 'O', 'P'], ['','Q', 'R', 'S', 'T', 'U'], ['','V', 'W', 'X', 'Y', 'Z']]
 standard_noZ = [[], ['', 'A', 'B', 'C', 'D', 'E'], ['', 'F', 'G', 'H', 'I', 'J'], ['', 'K', 'L', 'M', 'N', 'O'], ['','P', 'Q', 'R', 'S', 'T'], ['','U', 'V', 'W', 'X', 'Y']]
@@ -169,7 +169,7 @@ def polybius(text):
 if __name__ == '__main__':
     #----IMPORTANT----
     #--Check spelling!!!!!!! check where to put the missing letter which is shown at front!!--
-    file = open('./questions/2017/4b.txt', 'r')
+    file = open('../../questions/2017/3b.txt', 'r')
     text = file.read()
     file.close()
     #text = '442315354224321532243324434415425224313144425444341334335124331315154531151114154243443412111325231542113535423411132352231533432315111414421543431543442315321215213442151424333315423111441542124544155335151344114424343343342111124215112544234234452223114215313452522444234411312543141511143134132515143451154244231524422443231234421415422443434515'

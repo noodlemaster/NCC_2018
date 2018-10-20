@@ -1,5 +1,5 @@
 import re
-from src.checkenglishness import get_english_score
+from src.tools.checkenglishness import get_english_score
 
 alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
             'V', 'W', 'X', 'Y', 'Z']
@@ -121,7 +121,5 @@ if __name__ == '__main__':
     file = open('./questions/example/hill2x2simple.txt', 'r')
     text = file.read()
     file.close()
-
-    #text = 'APADJ TFTWLFJ'
     hill_2x2(text)
 
