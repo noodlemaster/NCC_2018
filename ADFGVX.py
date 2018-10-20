@@ -1,20 +1,38 @@
 import re
 from textksplit import *
+from Hill import *
 from src.transposition import *
 # from transposition import *
 
 template = []
 
-
 def convertTOtransposition(text):
-    PlainText = re.sub(r'\W', '', text)
-    '''find a factor'''
-
+    factor_list = get_factors(len(text))
+    factor_list.remove(1)
+    '''
+    text_list = []
+    for factor in factor_list:
+        l = group_text(text, factor)
+        text_list.append(l)
+    print(text_list)
+    for each in text_list:
+        n = len(each[0])
+        list1 = []
+        for i in range(n):
+            list1.append(each[i])
+        print(list1)
+    '''
+    l = []
+    for factor in factor_list:
+        l.append(textksplit(text, factor))
+    print(l)
 
 if __name__ == '__main__':
     text = 'DGDD DAGD DGAF ADDF DADV DVFA ADVX'
-    convertTOtransposition(text)
+    PlainText = re.sub(r'\W', '', text)
+    convertTOtransposition(PlainText)
 
+    '''
     plaintext = extract_alphabets(text)
     factors = get_factors(len(plaintext))
 
@@ -62,3 +80,4 @@ if __name__ == '__main__':
     for result in topnumbers:
         print(round(result[0], 2), end=', ')
         print(decrypt_transposition(text, result[1]))
+    '''
