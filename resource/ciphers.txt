@@ -1,0 +1,17 @@
+Caesar cipher
+Affine cipher
+Keyword cipher
+Transposition cipher
+Vigenere cipher
+2x2 Hill cipher
+Bacon cipher
+
+Substitution cipher:
+Beacon cipher
+Polybius cipher
+Playfair cipher
+
+Polyalphabetic cipher:
+Vigenere cipher
+Autokey cipher
+Alberti cipher
