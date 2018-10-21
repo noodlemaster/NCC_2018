@@ -6,8 +6,8 @@
 3b: Polybius cipher
 4a: random substitution GAZFREQUNSLIBYCM_XTKHOPJV_, bmo_fdaulxtkpivwgejshy_rnc
 4b: The Vigenère cipher
-5a: Keyword deco
-5b:
+5a: Keyword decoy
+5b: Vigenere cipher, k=4 a=3,8,24,22
 6a:
 6b:
 7a:
