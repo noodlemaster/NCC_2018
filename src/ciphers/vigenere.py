@@ -1,5 +1,8 @@
 import math
-from src.ciphers.affine import decipher_x_plus_a_by_frequency
+from src.ciphers.affine import decipher_x_plus_a_by_frequency, x_plus_a_check, get_map_of_x_plus_a, decrypt_mapping
+from src.tools.display import show_ioc, show_frequency
+from src.tools.frequency import frequency_analysis
+
 alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
 def extract_alphabets(text):
@@ -21,78 +24,48 @@ def textksplit(text, k):
         listofchars.append(chars)
     return listofchars
 
-def count_alphabet(text, alphabet):
-    alphabet_count = [0] * len(alphabet)
-    for i in range(len(alphabet)):
-        for c in text:
-            if c == alphabet[i].lower():
-                alphabet_count[i] += 1
-    return alphabet_count
+def decipher_vigenere(text, k = -1):
+    if k == -1:
+        show_ioc(text, 26)
+        k = int(input('Input the keyword length. k='))
+    list_texts = textksplit(extract_alphabets(text), k)
+    while True:
+        deciphered_texts = []
+        for list_text in list_texts:
+            list_text_string = ''.join(list_text)
+            index_e, index_t = frequency_analysis(''.join(list_text_string))
+            a = x_plus_a_check(index_e, index_t)
+            print(index_e, end=', ')
+            print(index_t, end=', ')
+            print(a)
+            show_frequency(list_text_string, False)
+            index_e_input = int(input('Input index of e (-1 to agree, -2 to leave)'))
+            if index_e_input == -1:
+                answer = decipher_x_plus_a_by_frequency(list_text_string)
+            elif index_e_input == -2:
+                answer = ''
+                for i in range(len(list_text_string)):
+                    answer += '_'
+            else:
+                print(index_e_input)
+                answer = decrypt_mapping(list_text_string, get_map_of_x_plus_a(x_plus_a_check(index_e_input, -1)))
+            deciphered_texts.append(answer)
 
-def calculate_ioc(text):
-    num = count_alphabet(text, alphabet)
-    total = len(text)
-    prob = 0.0
-    for n in num:
-        prob += (n*(n-1))
-    if total > 1:
-        prob /= (total*(total-1))
-    return prob
+        length = 0
+        for deciphered_text in deciphered_texts:
+            length += len(deciphered_text)
+        answer = ""
+        for i in range(length):
+            answer += deciphered_texts[(i%k)][int((i-(i%k))/k)]
 
-def get_first_ioc_k(text, k):
-    splitedtexts = textksplit(extract_alphabets(text), k)
-    prob = calculate_ioc(splitedtexts[0])
-    return prob
-
-def get_average_ioc_k(text, k):
-    splitedtexts = textksplit(extract_alphabets(text), k)
-    probsum = 0.0
-    for splitedtext in splitedtexts:
-        probsum += calculate_ioc(splitedtext)
-
-    probave = probsum / len(splitedtexts)
-    return probave
-
-def get_first_ioc_from_1_to_k(text, k):
-    ioc_list = []
-    for n in range(1, k + 1):
-        ioc_list.append(get_first_ioc_k(text, n))
-    return ioc_list
-
-def get_average_ioc_from_1_to_k(text, k):
-    ioc_list = []
-    for n in range(1, k + 1):
-        ioc_list.append(get_average_ioc_k(text, n))
-    return ioc_list
+        print(answer)
+        if int(input('1 to finish')) == 1:
+            break
+    return answer
 
 if __name__ == '__main__':
-    # file = open('../questions/example/vigenere.txt', 'r')
-    file = open('../questions/2017/4b.txt', 'r')
+    # file = open('../../questions/example/vigenere.txt', 'r')
+    file = open('../../questions/2017/4b.txt', 'r')
     text = file.read()
     file.close()
-    print(get_first_ioc_from_1_to_k(text, 30))
-    print(get_average_ioc_from_1_to_k(text, 30))
-    iocs = get_average_ioc_from_1_to_k(text, 30)
-    min_ioc_percent = 20
-    best_ioc = -1
-    for ioc in iocs:
-        error = math.fabs(ioc - 0.0686)/0.0686
-        if  error < min_ioc_percent:
-            min_ioc_percent = error
-            best_ioc = ioc
-    k = iocs.index(best_ioc) + 1
-    list_texts = textksplit(extract_alphabets(text), k)
-
-    deciphered_texts = []
-    for list_text in list_texts:
-        answer = decipher_x_plus_a_by_frequency(''.join(list_text))
-        deciphered_texts.append(answer)
-    length = 0
-    for deciphered_text in deciphered_texts:
-        length += len(deciphered_text)
-    answer = ""
-    for i in range(length):
-        a = i%k
-        b = (i-(i%k))/k
-        answer += deciphered_texts[(i%k)][int((i-(i%k))/k)]
-    print(answer)
+    decipher_vigenere(text)
