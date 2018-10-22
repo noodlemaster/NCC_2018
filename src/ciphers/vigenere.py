@@ -24,7 +24,6 @@ def textksplit(text, k):
         listofchars.append(chars)
     return listofchars
 
-def calculate_ioc(text):
 def decipher_vigenere(text, k = -1):
     if k == -1:
         show_ioc(text, 26)
