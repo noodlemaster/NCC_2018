@@ -1,0 +1,16 @@
+1a: Caesar shift a = 18
+1b: Caesar shift a = 15 and reverse
+2a: Caesar shift a = 20
+2b: a=21, b=3
+3a:
+3b:
+4a:
+4b:
+5a:
+5b:
+6a:
+6b:
+7a:
+7b:
+8a:
+8b:

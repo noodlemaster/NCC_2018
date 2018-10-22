@@ -122,13 +122,13 @@ def decipher_x_plus_a_by_frequency(text):
         return False
 
 if __name__ == '__main__':
-    file = open('../../questions/2018/3a.txt', 'r')
+    file = open('../../questions/2016/2b.txt', 'r', errors='replace')
     text = file.read()
     file.close()
 
     #decipher_by_english_check(text)
-    # print(decipher_x_plus_a_by_frequency(text))
-    # print(decipher_ax_plus_b_by_frequency(text))
+    print(decipher_x_plus_a_by_frequency(text))
+    print(decipher_ax_plus_b_by_frequency(text))
     print(decipher_by_english_check(text))
     # for i in range(11):
     #     print(decrypt_mapping(text, get_map_of_x_plus_a(i)))
