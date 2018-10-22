@@ -71,8 +71,8 @@ def matrix_multiplication_2x2_2x1_undermod26(twobytwo, twobyone):
     return matrix
 
 def generate_keys_2x2():
-    # word_file = open('./data/words/length/google/4.txt', 'r')
-    word_file = open('./data/words/length/firefox/4.txt', 'r')
+    # word_file = open('../../data/words/length/google/4.txt', 'r')
+    word_file = open('../../data/words/length/firefox/4.txt', 'r')
     keys = word_file.readlines()
     word_file.close()
     possible_key = []
@@ -117,8 +117,8 @@ def hill_2x2(text):
             print([top_score[index], result_list[index]])
 
 if __name__ == '__main__':
-    # file = open('./questions/example/hill2x2.txt', 'r') #Keyword: READ
-    file = open('./questions/example/hill2x2simple.txt', 'r')
+    file = open('../../questions/example/hill2x2.txt', 'r') #Keyword: READ
+    # file = open('../../questions/2017/6a.txt', 'r')
     text = file.read()
     file.close()
     hill_2x2(text)

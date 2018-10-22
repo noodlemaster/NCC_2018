@@ -48,7 +48,7 @@ def frequency_analysis(text):
     return index_e, index_t
 
 if __name__ == '__main__':
-    file = open('../questions/2017/4a.txt', 'r')
+    file = open('../../questions/2017/6a.txt', 'r')
     text = file.read()
     file.close()
     frequency = get_frequency(text)

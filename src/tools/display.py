@@ -35,9 +35,8 @@ def show_ioc(text , n, average = True):
     pyplot.show()
 
 if __name__ == '__main__':
-    file = open('../../questions/2017/5b.txt', 'r')
+    file = open('../../questions/2016/1a.txt', 'r')
     text = file.read()
     file.close()
     show_frequency(text, False)
     show_ioc(text, 50, True)
-    show_ioc(text, 50, False)
