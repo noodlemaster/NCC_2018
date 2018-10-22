@@ -66,8 +66,8 @@ def get_average_ioc_from_1_to_k(text, k):
     return ioc_list
 
 if __name__ == '__main__':
-    # file = open('../questions/example/vigenere.txt', 'r')
-    file = open('../questions/2017/4b.txt', 'r')
+    #file = open('../../questions/example/vigenere.txt', 'r')
+    file = open('../../questions/2017/6B.txt', 'r')
     text = file.read()
     file.close()
     print(get_first_ioc_from_1_to_k(text, 30))

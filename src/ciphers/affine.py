@@ -120,7 +120,7 @@ def decipher_x_plus_a_by_frequency(text):
         return False
 
 if __name__ == '__main__':
-    file = open('../questions/2017/3a.txt', 'r')
+    file = open('../../questions/2017/6a.txt', 'r')
     text = file.read()
     file.close()
 

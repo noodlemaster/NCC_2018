@@ -103,7 +103,8 @@ def display_top_result(results, numbertop = 5):
         print(decrypt_transposition(text, result[1]))
 
 if __name__ == '__main__':
-    inputfile = open('../questions/example/transposition.txt', 'r')
+    #inputfile = open('../questions/example/transposition.txt', 'r')
+    inputfile = open('../../questions/2017/6a.txt', 'r')
     text = inputfile.read()
     inputfile.close()
 
