@@ -1,0 +1,6 @@
+1a: x+a a=19
+1b: x+a a=15
+2a: x+a a=19
+2b: ax+b a=11, b=4
+3a: ax+b a=15, b=22
+3b: keyword cipher : loyalty

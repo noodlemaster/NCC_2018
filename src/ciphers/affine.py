@@ -4,15 +4,17 @@ from src.tools.frequency import frequency_analysis
 
 alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
-def x_plus_a_check(index_e, index_t):
+def x_plus_a_check(index_e, index_t = -1):
     if index_e > 4:
         a = 26 - (index_e - 4)
     else:
         a = 4 - index_e
+    if index_t == -1:
+        return a
     if (index_t + a) % 26 == 19:  # check with t
         return a
     else:
-        return a #False
+        return False
 
 def get_map_of_x_plus_a(a):
     mapping = []
@@ -120,12 +122,13 @@ def decipher_x_plus_a_by_frequency(text):
         return False
 
 if __name__ == '__main__':
-    file = open('../../questions/2017/6a.txt', 'r')
+    file = open('../../questions/2018/3a.txt', 'r')
     text = file.read()
     file.close()
 
     #decipher_by_english_check(text)
-    print(decipher_ax_plus_b_by_frequency(text))
+    # print(decipher_x_plus_a_by_frequency(text))
+    # print(decipher_ax_plus_b_by_frequency(text))
     print(decipher_by_english_check(text))
     # for i in range(11):
     #     print(decrypt_mapping(text, get_map_of_x_plus_a(i)))
