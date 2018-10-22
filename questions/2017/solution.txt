@@ -5,12 +5,12 @@
 3a: ax+b a=15, b=22
 3b: Polybius cipher
 4a: random substitution GAZFREQUNSLIBYCM_XTKHOPJV_, bmo_fdaulxtkpivwgejshy_rnc
-4b: The Vigenère cipher
+4b: Vigenère cipher k=13 a =
 5a: Keyword decoy
-5b: Vigenere cipher, k=4 a=3,8,24,22
-6a:
+5b:
+6a: Vigenere cipher k=4 a = [1, 22, 6, 8]
 6b:
-7a:
+7a: Vigenere cipher k=14 a =
 7b:
-8a:
+8a: Vigenere cipher k=8 a = [14, 17, 18, 13, 13, 22, 20, 22] and reverse the whole text
 8b:
