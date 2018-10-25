@@ -2,6 +2,9 @@ import re
 
 from src.tools.checkenglishness import get_english_score
 from src.tools.display import show_frequency
+import time
+
+from src.tools.text_manipulation import reverse_text
 
 alphabets = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
              'V', 'W', 'X', 'Y', 'Z']
@@ -68,42 +71,60 @@ def get_map_with_keyword(keyword):
             map.append([alphabets[i].lower(), left_alpabets[n].upper()])
     return map
 
-def check_all_with_keyword(text, keyword, index_e):
+def check_all_with_keyword(text, keyword, index_e=-1, reverse=False):
     maps = get_maps_with_keyword(keyword)
     results = []
     for map in maps:
         if index_e != -1:
-            if map[4][1] != alphabets[index_e]:
-                break
-        original = decrypt_mapping(text, map)
-        results.append([get_english_score(original), keyword, original])
+            if map[4][1] == alphabets[index_e]:
+                original = decrypt_mapping(text, map)
+                if reverse:
+                    original = reverse_text(original)
+                score = get_english_score(original)
+                # if score > 100:
+                results.append([score, keyword, original])
+        else:
+            original = decrypt_mapping(text, map)
+            if reverse:
+                original = reverse_text(original)
+            score = get_english_score(original)
+            # if score > 100:
+            results.append([score, keyword, original])
     return results
 
-def check_map_with_keyword(text, keyword, index_e = -1):
+def check_map_with_keyword(text, keyword, index_e=-1, reverse=False):
     map = get_map_with_keyword(keyword)
     if index_e != -1:
         if map[4][1] != alphabets[index_e]:
             return False
     original = decrypt_mapping(text, map)
+    if reverse:
+        original = reverse_text(original)
     result = [get_english_score(original), keyword, original]
     return result
 
-def try_all_keywords(text, start=4, end=10, index_e=-1, easy=False):
+def try_all_keywords(text, start=4, end=10, index_e=-1, easy=False, reverse=False, google=True):
     results = []
     for i in range(start, end + 1):
-        # file = open('../../../data/words/length/google/' + str(i) + '.txt', 'r')
-        file = open('../../../data/words/length/firefox/' + str(i) + '.txt', 'r')
+        results = []
+        if google:
+            file = open('../../data/words/length/google/' + str(i) + '.txt', 'r')
+        else:
+            file = open('../../data/words/length/firefox/' + str(i) + '.txt', 'r')
         words = file.readlines()
         file.close()
         for word in words:
             if easy:
-                result = check_map_with_keyword(text, word, index_e)
+                result = check_map_with_keyword(text, word, index_e, reverse)
                 if result:
                     results.append(result)
                     results = keep_top_results(results, [], 100)
             else:
-                result = check_all_with_keyword(text, word, index_e)
-                results = keep_top_results(results, result, 100)
+                result = check_all_with_keyword(text, word, index_e, reverse)
+                if result:
+                    results = keep_top_results(results, result, 100)
+        print('done:' + str(i))
+        display_top_result(results)
     return results
 
 def keep_top_results(results, newresult, topnum=5):
@@ -123,7 +144,7 @@ def keep_top_results(results, newresult, topnum=5):
         all_results.remove(biggest)
     return top_result
 
-def display_top_result(results, numbertop=5, easy=False):
+def display_top_result(results, numbertop=5):
     topnumbers = []
     for i in range(numbertop):
         biggest = []
@@ -139,20 +160,19 @@ def display_top_result(results, numbertop=5, easy=False):
         except:
             pass
     for result in topnumbers:
-        if easy:
-            print(round(result[0], 2), end=', ')
-            print(result[1])
-            print(result[2])
-        else:
-            print(round(result[0], 2), end=', ')
-            print(result[1])
-            print(result[2])
+        print(round(result[0], 2), end=', ')
+        print(result[1])
+        print(result[2])
 
 if __name__ == '__main__':
-    file = open('../../../questions/2017/5a_2.txt', 'r')
+    start = time.time()
+    file = open('../../questions/2016/5a.txt', 'r')
     text = file.read()
     file.close()
     show_frequency(text, False)
     index_e_input = int(input('Input index of e'))
-    display_top_result(try_all_keywords(text, 4, 8, index_e_input, True), 3, True)
-    # display_top_result(check_all_with_keyword(text, 'deco'))
+    # display_top_result(try_all_keywords(text, 4, 7, index_e_input, True), 3)
+    try_all_keywords(text, 4, 8, index_e_input, easy=False, reverse=False, google=True)
+    # try_all_keywords(text, 4, 8, index_e_input, easy=False, reverse=True, google=True)
+    # display_top_result(check_all_with_keyword(text, 'WAVEFORM'))
+    print(time.time() - start)
