@@ -1,12 +1,12 @@
 1a: Caesar shift a = 18
 1b: Caesar shift a = 15 and reverse
 2a: Caesar shift a = 20
-2b: a=21, b=3
-3a:
-3b:
-4a:
-4b:
-5a:
+2b: Affine shift a=21, b=3
+3a: Keyword: WESTON, starts from X
+3b: Keyword: NEURAL, starts from V
+4a: keyword: WAVEFORM
+4b: Reverse and transposition [2,3,1,0,4]
+5a: Keyword charlie
 5b:
 6a:
 6b:

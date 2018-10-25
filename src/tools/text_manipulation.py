@@ -19,7 +19,15 @@ def textksplit(text, n):
         listofchars.append(chars)
     return listofchars
 
+def reverse_text(text):
+    l = len(text)
+    newstring = ""
+    for i in range(l):
+        newstring += text[l-i]
+    return newstring
+
 if __name__ == '__main__':
     text = "XSFJD JMNRF RUDJV LMYFT GWWHP TUDIA HWRMS XXAHJ DNBRH QTOFF NWFGH GLDJJ ATQWH UEQEM DMHRH LMCGL ZAYBT HUWIC "
     text = "apple was great"
-    print(textksplit(removespace(text), 4))
+    # print(textksplit(removespace(text), 4))
+    print(reverse_text(text))
