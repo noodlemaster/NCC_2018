@@ -5,12 +5,12 @@
 3a: Keyword: WESTON, starts from X
 3b: Keyword: NEURAL, starts from V
 4a: keyword: WAVEFORM
-4b: Reverse and transposition [2,3,1,0,4]
-5a: Keyword charlie
-5b:
-6a:
-6b:
-7a:
+4b: Reverse and transposition [2,3,1,0,4] use excel
+5a: Keyword: CHARLIE
+5b: Transposition: (4, 0, 1, 3, 2)
+6a: Vigenere [13, 8, 0]
+6b: Vigenere [7, 9, 0, 18, 13, 22, 9]
+7a: Vigenere [22, 8, 6, 15, 15, 18, 19] and reverse
 7b:
 8a:
 8b:
