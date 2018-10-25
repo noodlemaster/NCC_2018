@@ -1,5 +1,9 @@
 import itertools
+
+import time
+
 from src.tools.checkenglishness import get_all_english_score_in_text, get_english_score
+from src.tools.text_manipulation import reverse_text
 
 def get_factors(n):
     factors = []
@@ -56,19 +60,19 @@ def decrypt_transposition(text, combination):
     answer = return_to_text(arranged_table)
     return answer
 
-def decrypt_all_trasposition(text, max_columns = 7):
+def decrypt_all_trasposition(text, max_columns = 7, min_colums = 2):
     outputfile = open('output.txt', 'w')
     plaintext = extract_alphabets(text)
     factors = get_factors(len(plaintext))
     factors_to_check = []
     for f in factors:
-        if f > max_columns:
-            break
-        else:
+        if max_columns >= f >= min_colums:
             factors_to_check.append(f)
-    factors_to_check.pop(0)  # remove one
+        else:
+            pass
     results = []
     for f in factors_to_check:
+        start = time.time()
         table = groupcharactors(plaintext, f)
         for combination in generate_permutation(f):
             result = []
@@ -83,6 +87,8 @@ def decrypt_all_trasposition(text, max_columns = 7):
                 outputfile.write(str(c) + ", ")
             outputfile.write("\n")
             results.append(result)
+        print('Done: ' + str(f))
+        print(time.time() - start)
     return results
 
 def display_top_result(results, numbertop = 5):
@@ -103,9 +109,13 @@ def display_top_result(results, numbertop = 5):
         print(decrypt_transposition(text, result[1]))
 
 if __name__ == '__main__':
-    #inputfile = open('../questions/example/transposition.txt', 'r')
-    inputfile = open('../../questions/2017/6a.txt', 'r')
+    start = time.time()
+    # inputfile = open('../../questions/example/transposition.txt', 'r')
+    inputfile = open('../../questions/2016/5b.txt', 'r')
     text = inputfile.read()
     inputfile.close()
-
-    display_top_result(decrypt_all_trasposition(text))
+    display_top_result(decrypt_all_trasposition(text, 7))
+    # display_top_result(decrypt_all_trasposition(reverse_text(text), 5))
+    # text = reverse_text(text)
+    # print(decrypt_transposition(text, [2,3,1,0,4]))
+    print(time.time() - start)

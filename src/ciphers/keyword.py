@@ -106,7 +106,7 @@ def check_map_with_keyword(text, keyword, index_e=-1, reverse=False):
 def try_all_keywords(text, start=4, end=10, index_e=-1, easy=False, reverse=False, google=True):
     results = []
     for i in range(start, end + 1):
-        results = []
+        start = time.time()
         if google:
             file = open('../../data/words/length/google/' + str(i) + '.txt', 'r')
         else:
@@ -124,7 +124,7 @@ def try_all_keywords(text, start=4, end=10, index_e=-1, easy=False, reverse=Fals
                 if result:
                     results = keep_top_results(results, result, 100)
         print('done:' + str(i))
-        display_top_result(results)
+        print(time.time() - start)
     return results
 
 def keep_top_results(results, newresult, topnum=5):
@@ -145,6 +145,7 @@ def keep_top_results(results, newresult, topnum=5):
     return top_result
 
 def display_top_result(results, numbertop=5):
+    start = time.time()
     topnumbers = []
     for i in range(numbertop):
         biggest = []
@@ -163,16 +164,20 @@ def display_top_result(results, numbertop=5):
         print(round(result[0], 2), end=', ')
         print(result[1])
         print(result[2])
+    print(time.time() - start)
 
 if __name__ == '__main__':
     start = time.time()
-    file = open('../../questions/2016/5a.txt', 'r')
+    year = '2016'
+    question = '6a'
+    file = open('../../questions/' + year + '/' + question + '.txt', 'r')
+    print(year+ '/' + question)
     text = file.read()
     file.close()
     show_frequency(text, False)
     index_e_input = int(input('Input index of e'))
     # display_top_result(try_all_keywords(text, 4, 7, index_e_input, True), 3)
-    try_all_keywords(text, 4, 8, index_e_input, easy=False, reverse=False, google=True)
+    display_top_result(try_all_keywords(text, 4, 8, index_e_input, easy=False, reverse=False, google=True))
     # try_all_keywords(text, 4, 8, index_e_input, easy=False, reverse=True, google=True)
     # display_top_result(check_all_with_keyword(text, 'WAVEFORM'))
     print(time.time() - start)
