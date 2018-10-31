@@ -7,7 +7,14 @@ alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N'
             'V', 'W', 'X', 'Y', 'Z']
 
 def show_frequency(text, alp = True):
-    frequency = get_frequency(text)
+    if text:
+        frequency = get_frequency(text)
+    else:
+        file = open('../../data/letter_frequency.txt', 'r')
+        frequency = file.readlines()
+        file.close()
+        for i in range(len(frequency)):
+            frequency[i] = float(frequency[i].strip())/100
     pyplot.title('Character frequency')
     list = []
     list_s = []
@@ -30,13 +37,18 @@ def show_ioc(text , n, average = True):
     list = []
     for i in range(n):
         list.append(i+1)
-    pyplot.bar(list, iocs)
+    pyplot.bar(list, iocs, tick_label=list)
     pyplot.hlines(0.0667, 0, n + 1)
     pyplot.show()
 
 if __name__ == '__main__':
-    file = open('../../questions/2016/1a.txt', 'r')
+    year = '2016'
+    question = '8b_3'
+    # file = open('../../questions/example/hill2x2.txt', 'r')
+    file = open('../../questions/' + year + '/' + question + '.txt', 'r')
     text = file.read()
     file.close()
+    show_frequency(False, True)
+    show_frequency(text, True)
+    show_ioc(text, 55, True)
     show_frequency(text, False)
-    show_ioc(text, 50, True)
