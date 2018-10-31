@@ -1,4 +1,7 @@
 import re
+
+import time
+
 from src.tools.checkenglishness import get_english_score
 
 alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
@@ -75,7 +78,7 @@ def generate_keys_2x2():
     word_file = open('../../data/words/length/firefox/4.txt', 'r')
     keys = word_file.readlines()
     word_file.close()
-    possible_key = []
+    possible_keys = []
     for keyword in keys:
         i = alphabet.index(keyword[0].upper())
         j = alphabet.index(keyword[1].upper())
@@ -85,27 +88,28 @@ def generate_keys_2x2():
         det = det_2x2(possible_matrix)
         if hill_check(det):
             inv = invert_2x2_undermod26(possible_matrix, det)
-            possible_key.append(inv)
+            possible_keys.append([inv, keyword])
         else:
             pass
-    return possible_key
+    return possible_keys
 
 def hill_2x2(text):
     matrix_list = text2matrix_2x2(group_text(text, 2))
-    possible_key = generate_keys_2x2()
-    result_list = []
-    for keys in possible_key:
+    possible_keys = generate_keys_2x2()
+    results = []
+    for keys in possible_keys:
+        result = []
         l = []
         for matrices in matrix_list:
-            result = matrix_multiplication_2x2_2x1_undermod26(keys, matrices)
+            result = matrix_multiplication_2x2_2x1_undermod26(keys[0], matrices)
             string = matrix2text_2x1(result)
             l.append(string)
         char = ''.join(l)
-        result_list.append(char)
+        results.append([keys[1], char])
 
     top_score = []
-    for each in result_list:
-        score = get_english_score(each)
+    for each in results:
+        score = get_english_score(each[1])
         top_score.append(score)
 
     howmany = 5
@@ -114,12 +118,15 @@ def hill_2x2(text):
         highscore = sorted(top_score)[-i]
         index = top_score.index(highscore)
         if isinstance(index, int):
-            print([top_score[index], result_list[index]])
+            print([top_score[index], results[index][0], results[index][1]])
 
 if __name__ == '__main__':
-    file = open('../../questions/example/hill2x2.txt', 'r') #Keyword: READ
-    # file = open('../../questions/2017/6a.txt', 'r')
+    start = time.time()
+    # file = open('../../questions/example/hill2x2.txt', 'r') #Keyword: READ
+    year = '2016'
+    question = '8a'
+    file = open('../../questions/' + year + '/' + question + '.txt', 'r')
     text = file.read()
     file.close()
     hill_2x2(text)
-
+    print(time.time() - start)
