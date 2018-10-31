@@ -137,9 +137,10 @@ def display_top_result(results, numbertop=5):
 
 if __name__ == '__main__':
     # file = open('../../questions/example/vigenere.txt', 'r')
-    file = open('../../questions/2017/6b.txt', 'r')
+    year = '2016'
+    question = '7b'
+    file = open('../../questions/' + year + '/' + question + '.txt', 'r')
     text = file.read()
     file.close()
-    display_top_result(decipher_vigenere(text, True))
-    # display_top_result(decipher_vigenere(text, showk=35))
+    display_top_result(decipher_vigenere(text, affine=True))
     # print(decipher_vigenere_with_a(text, [19, 0, 13, 20, 18, 13, 20, 20, 0, 9, 23, 22, 13, 8]))
