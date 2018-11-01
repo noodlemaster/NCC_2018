@@ -4,3 +4,5 @@
 2b: ax+b a=11, b=4
 3a: ax+b a=15, b=22
 3b: keyword cipher : loyalty
+4a: keyword: lidar
+4b: keyphase: realpolitik
