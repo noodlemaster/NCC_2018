@@ -1,5 +1,5 @@
 from src.ciphers.transposition import *
-from src.tools.textksplit import *
+from src.tools.text_manipulation import *
 import re
 
 def scytale(text):
@@ -7,7 +7,7 @@ def scytale(text):
 	factor = get_factors(len(PlainText))
 	result = []
 	for each in factor:
-		l = textksplit(PlainText, each)
+		l = text_k_split(PlainText, each)
 		word_list = []
 		for s in l:
 			string = ''.join(s)
