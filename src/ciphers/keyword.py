@@ -99,8 +99,15 @@ def check_map_with_keyword(text, keyword, index_e=-1, reverse=False):
             return False
     original = decrypt_mapping(text, map)
     if reverse:
-        original = reverse_text(original)
-    result = [get_english_score(original), keyword, original]
+        score1 = get_english_score(original)
+        reversedtext = reverse_text(original)
+        score2 = get_english_score(reversedtext)
+        if score1 >= score2:
+            result = [score1, keyword, original]
+        else:
+            result = [score2, keyword, reversedtext]
+    else:
+        result = [get_english_score(original), keyword, original]
     return result
 
 def try_all_keywords(text, start=4, end=10, index_e=-1, easy=False, reverse=False, google=True):
@@ -168,16 +175,13 @@ def display_top_result(results, numbertop=5):
 
 if __name__ == '__main__':
     start = time.time()
-    year = '2016'
-    question = '6a'
-    file = open('../../questions/' + year + '/' + question + '.txt', 'r')
+    year = '2018'
+    question = '5a'
+    file = open('../../questions/' + year + '/' + question + '.txt', 'r', errors='replace')
     print(year+ '/' + question)
     text = file.read()
     file.close()
     show_frequency(text, False)
     index_e_input = int(input('Input index of e'))
-    # display_top_result(try_all_keywords(text, 4, 7, index_e_input, True), 3)
     display_top_result(try_all_keywords(text, 4, 8, index_e_input, easy=False, reverse=False, google=True))
-    # try_all_keywords(text, 4, 8, index_e_input, easy=False, reverse=True, google=True)
-    # display_top_result(check_all_with_keyword(text, 'WAVEFORM'))
     print(time.time() - start)
