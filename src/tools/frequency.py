@@ -1,7 +1,11 @@
 import re
 
+from src.tools.text_manipulation import removespace
+
 alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
             'V', 'W', 'X', 'Y', 'Z']
+bigrams = [["th", 1.52],["he", 1.28],["in", 0.94],["er", 0.94],["an", 0.82],["re", 0.68],["nd", 0.63],["at", 0.59],["on", 0.57],["nt", 0.56],["ha", 0.56],["es", 0.56],["st", 0.55],["en", 0.55],["ed", 0.53],["to", 0.52],["it", 0.50],["ou", 0.50],["ea", 0.47],["hi", 0.46],["is", 0.46],["or", 0.43],["ti", 0.34],["as", 0.33],["te", 0.27],["et", 0.19],["ng", 0.18],["of", 0.16],["al", 0.09],["de", 0.09],["se", 0.08],["le", 0.08],["sa", 0.06],["si", 0.05],["ar", 0.04],["ve", 0.04],["ra", 0.04],["ld", 0.02],["ur", 0.02]]
+trigrams = [["THE", 1.87], ["AND", 0.78], ["ING", 0.69], ["HER", 0.42], ["THA", 0.37], ["ENT", 0.36], ["ERE", 0.33], ["ION", 0.33], ["ETH", 0.32], ["NTH", 0.32], ["HAT", 0.31], ["INT", 0.29], ["FOR", 0.28], ["ALL", 0.27], ["STH", 0.26], ["TER", 0.26], ["EST", 0.26], ["TIO", 0.26], ["HIS", 0.25], ["OFT", 0.24], ["HES", 0.24], ["ITH", 0.24], ["ERS", 0.24], ["ATI", 0.24], ["OTH", 0.23], ["FTH", 0.23], ["DTH", 0.23], ["VER", 0.22], ["TTH", 0.22], ["THI", 0.22], ["REA", 0.21], ["SAN", 0.21], ["WIT", 0.21], ["ATE", 0.2], ["ARE", 0.2], ["EAR", 0.19], ["RES", 0.19], ["ONT", 0.18], ["TIN", 0.18], ["ESS", 0.18], ["RTH", 0.18], ["WAS", 0.18], ["SOF", 0.18], ["EAN", 0.17], ["YOU", 0.17], ["SIN", 0.17], ["STO", 0.17], ["IST", 0.17], ["EDT", 0.16], ["EOF", 0.16], ["EVE", 0.16], ["ONE", 0.16], ["AST", 0.16], ["ONS", 0.16], ["DIN", 0.16], ["OME", 0.16], ["CON", 0.16], ["ERA", 0.16], ["STA", 0.15], ["OUR", 0.15], ["NCE", 0.15], ["TED", 0.15], ["GHT", 0.15], ["HEM", 0.15], ["MAN", 0.15], ["HEN", 0.15], ["NOT", 0.15], ["ORE", 0.15], ["OUT", 0.15], ["ORT", 0.15], ["ESA", 0.15], ["ERT", 0.15], ["SHE", 0.14], ["ANT", 0.14], ["NGT", 0.14], ["EDI", 0.14], ["ERI", 0.14], ["EIN", 0.14], ["NDT", 0.14], ["NTO", 0.14], ["ATT", 0.14], ["ECO", 0.13], ["AVE", 0.13], ["MEN", 0.13], ["HIN", 0.13], ["HEA", 0.13], ["IVE", 0.13], ["EDA", 0.13], ["INE", 0.13], ["RAN", 0.13], ["HEC", 0.13], ["TAN", 0.13], ["RIN", 0.13], ["ILL", 0.13], ["NDE", 0.13], ["THO", 0.13], ["HAN", 0.13], ["COM", 0.12], ["IGH", 0.12], ["AIN", 0.12]]
 
 # def get_frequency(text):
 #     freq_character = []
@@ -110,12 +114,38 @@ def get_possible_index_of_e_t_from_frequency(text, affine=False, e=3, t=4):
                 possible_conbination.append([a, result])
     return possible_conbination
 
+def get_all_n_gram(text, n):
+    all_n_gram_list = []
+    for i in range(len(text)-n):
+        chars = ''
+        for k in range(n):
+            chars += text[i + k]
+        for j in range(len(all_n_gram_list)):
+            if chars == all_n_gram_list[j][0]:
+                all_n_gram_list[j][1] += 1
+                chars = ''
+                break
+        if not chars == '':
+            all_n_gram_list.append([chars, 1])
+    all_n_gram_list.sort(reverse=True, key=sort_function)
+    return all_n_gram_list
+
+def get_n_gram_frequency(text, n):
+    text = removespace(text)
+    all_n_gram_list = get_all_n_gram(text, n)
+    n_gram_frequency = []
+    length = len(text)-n
+    for l in all_n_gram_list:
+        n_gram_frequency.append([l[0].upper(), l[1]/length*100])
+    return n_gram_frequency
+
 if __name__ == '__main__':
-    file = open('../../questions/2017/6a.txt', 'r')
+    file = open('../../questions/2018/5b_a.txt', 'r')
     text = file.read()
     file.close()
-    frequency = get_frequency(text)
-    for i in range(len(frequency)):
-        print(alphabet[i] + ", " + str(frequency[i]))
-    print("(e, t)")
-    print(frequency_analysis(text))
+    # frequency = get_frequency(text)
+    # for i in range(len(frequency)):
+    #     print(alphabet[i] + ", " + str(frequency[i]))
+    # print("(e, t)")
+    # print(frequency_analysis(text))
+    get_n_gram_frequency(text, 1)
