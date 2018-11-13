@@ -6,3 +6,5 @@
 3b: keyword cipher : loyalty
 4a: keyword: lidar
 4b: keyphase: realpolitik
+5a: Keyword: ariadne and start from S
+5b: Reverse and keyword cipher: reichstadt
