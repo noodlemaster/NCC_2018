@@ -1,6 +1,6 @@
 from matplotlib import pyplot
 
-from src.tools.frequency import get_frequency
+from src.tools.frequency import get_frequency, get_n_gram_frequency
 from src.tools.index_of_coincidence import get_average_ioc_from_1_to_k, get_first_ioc_from_1_to_k
 
 alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
