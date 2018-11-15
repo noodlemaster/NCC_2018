@@ -9,7 +9,7 @@
 5a: Keyword decoy
 5b: Beaufort cioher keyword = arcanaimperii [0,17,2,0,13,0,8,12,15,4,17,8,8]
 6a: Vigenere cipher k = 4 a = [1, 22, 6, 8] keyword = ZEUS [25, 4, 20, 18]
-6b: Vigenere cipher with affine shifts k = 15
+6b: Double cipher, Vigenere cipher and affine shift key=AGRICOLAEMORTEM [0,6,17,8,2,14,11,0,4,12,14,17,19,4,12]  a=[0,20,9,18,24,12,15,0,22,14,12,9,7,22,14]
 7a: Vigenere cipher k = 14 a = [19, 0, 13, 20, 18, 13, 20, 20, 0, 9, 23, 22, 13, 8]   keyword=HANGINGGARDENS[7,0,13,6,8,13,6,6,0,17,3,4,13,18]  index_e=[11, 4, 17, 10, 12, 17, 10, 10, 4, 21, 7, 8, 17, 12]
 7b: keyword from steganography: scytale securitatem praebet amplius
 8a: Vigenere cipher k = 8 a = [14, 17, 18, 13, 13, 22, 20, 22] and reverse the whole text
