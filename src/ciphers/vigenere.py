@@ -7,7 +7,7 @@ from src.ciphers.affine import decipher_x_plus_a_by_frequency, x_plus_a_check, g
 from src.tools.checkenglishness import get_english_score
 from src.tools.display import show_ioc, show_frequency
 from src.tools.frequency import frequency_analysis, get_possible_index_of_e_t_from_frequency
-from src.tools.text_manipulation import reverse_text
+from src.tools.text_manipulation import reverse_text, removespace
 
 alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
@@ -50,39 +50,46 @@ def choose_k_from_ioc(text, showk = 26):
     k = int(input('Input the keyword length. k='))
     return k
 
-def choose_possible_as_by_frequency(text, k, affine, use_a=False, display=True):
+def choose_possible_as_by_frequency(text, k, affine, use_a=False, display=True, auto=False):
     list_texts = textksplit(extract_alphabets(text), k)
     a_for_each = []
     for list_text in list_texts:
         list_text_string = ''.join(list_text)
         if affine:
-            possible_indexes = get_possible_index_of_e_t_from_frequency(''.join(list_text_string), affine=True, e=5, t=6)
+            possible_indexes = get_possible_index_of_e_t_from_frequency(''.join(list_text_string), affine=True, e=2, t=4)
             print(possible_indexes)
         else:
             possible_indexes = get_possible_index_of_e_t_from_frequency(''.join(list_text_string), e=5, t=6)
             print(possible_indexes)
-        if display:
-            show_frequency(list_text_string, False)
-        if not use_a:
-            index_e_input = input('Input possible indexes of e (split them using \',\' )(-1 to agree)')
-            indexes = index_e_input.split(',')
+        if auto:
             a_s = []
-            if int(indexes[0]) == -1:
-                for index in possible_indexes:
-                    a_s.append(int(index[0]))
-            else:
-                for index in indexes:
-                    a_s.append(x_plus_a_check(int(index)))
+            if len(possible_indexes) == 0:
+                a_s.append(0)
+            for index in possible_indexes:
+                a_s.append(int(index[0]))
         else:
-            index_e_input = input('Input possible a (split them using \',\' )')
-            indexes = index_e_input.split(',')
-            a_s = []
-            if int(indexes[0]) == -1:
-                for index in possible_indexes:
-                    a_s.append(int(index[0]))
+            if display:
+                show_frequency(list_text_string, False)
+            if not use_a:
+                index_e_input = input('Input possible indexes of e (split them using \',\' )(-1 to agree)')
+                indexes = index_e_input.split(',')
+                a_s = []
+                if int(indexes[0]) == -1:
+                    for index in possible_indexes:
+                        a_s.append(int(index[0]))
+                else:
+                    for index in indexes:
+                        a_s.append(x_plus_a_check(int(index)))
             else:
-                for index in indexes:
-                    a_s.append((int(index)))
+                index_e_input = input('Input possible a (split them using \',\' )')
+                indexes = index_e_input.split(',')
+                a_s = []
+                if int(indexes[0]) == -1:
+                    for index in possible_indexes:
+                        a_s.append(int(index[0]))
+                else:
+                    for index in indexes:
+                        a_s.append((int(index)))
         a_for_each.append(a_s)
     return (a_for_each)
 
@@ -127,10 +134,10 @@ def decipher_vigenere_with_a(text, a_s):
     answer = [get_english_score(answer), a_s, answer]
     return answer
 
-def decipher_vigenere(text, affine = False, k = -1, showk = 26, use_a = False, display=True, reverse=False):
+def decipher_vigenere(text, affine = False, k = -1, showk = 26, use_a = False, display=True, reverse=False, auto=False):
     if k == -1:
         k = choose_k_from_ioc(text, showk)
-    a_for_each = choose_possible_as_by_frequency(text, k, affine, use_a, display)
+    a_for_each = choose_possible_as_by_frequency(text, k, affine, use_a, display, auto)
     start = time.time()
     results = decipher_vigenere_all_possible_combination_of_a(text, k, a_for_each, affine=affine, reverse=reverse)
     print(time.time() - start)
@@ -157,10 +164,9 @@ def display_top_result(results, numbertop=5):
         print(result[2])
 
 if __name__ == '__main__':
-    # file = open('../../questions/example/vigenere.txt', 'r')
     year = '2017'
-    question = '7b'
+    question = '6b'
     file = open('../../questions/' + year + '/' + question + '.txt', 'r')
     text = file.read()
     file.close()
-    display_top_result(decipher_vigenere(text, affine=False, use_a=False, display=False, reverse=True))
+    display_top_result(decipher_vigenere(text, affine=False, use_a=False, display=False, reverse=False, auto=True))
