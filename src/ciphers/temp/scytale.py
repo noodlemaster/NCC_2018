@@ -18,8 +18,8 @@ def scytale(text):
 	return result
 
 if __name__ == '__main__':
-	#file = open('../../../questions/example/scytale.txt', 'r')
-	file = open('../../../questions/2017/7b.txt', 'r')
+	file = open('../../../questions/example/scytale.txt', 'r')
+	#file = open('../../../questions/2017/7b.txt', 'r')
 	text = file.read()
 	file.close()
 	scytale(text)
