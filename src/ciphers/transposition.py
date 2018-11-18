@@ -111,10 +111,10 @@ def display_top_result(results, numbertop = 5):
 if __name__ == '__main__':
     start = time.time()
     # inputfile = open('../../questions/example/transposition.txt', 'r')
-    inputfile = open('../../questions/2016/5b.txt', 'r')
+    inputfile = open('../../questions/2018/6b.txt', 'r')
     text = inputfile.read()
     inputfile.close()
-    display_top_result(decrypt_all_trasposition(text, 7))
+    display_top_result(decrypt_all_trasposition(text, 9, 9))
     # display_top_result(decrypt_all_trasposition(reverse_text(text), 5))
     # text = reverse_text(text)
     # print(decrypt_transposition(text, [2,3,1,0,4]))
