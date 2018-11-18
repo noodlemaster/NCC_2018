@@ -8,3 +8,5 @@
 4b: keyphase: realpolitik
 5a: Keyword: ariadne and start from S
 5b: Reverse and keyword cipher: reichstadt
+6a: keyword: nautilus
+6b: Transposition k=5 [1, 0, 4, 3, 2]
