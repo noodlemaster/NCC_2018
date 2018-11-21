@@ -177,7 +177,7 @@ def display_data(x, y):
     plt.axis([0, 10**3, 0, 500])
     point = ax1.scatter(x, y)
     def animation():
-        point.set_xdata()
+        point.set_xdata(x)
         point.set_ydata(y)
         #return point
     # def update():
@@ -228,42 +228,28 @@ def hill_climbing():
             print('Iteration ' + str(count) + '   child keyword: ' + child_keyword + '  child score: ' + str(
                 child_score) + '   Method: ' + meth + '  Highest score: ' + str(highest_score))
 
-        elif dG < 0:
-            unsuccessful += 1
-
-        elif dG > 0 and dF < 0:
-            print('Iteration ' + str(count) + '   child keyword: ' + child_keyword + '  child score: ' + str(
-                child_score) + '   Method: ' + meth + '  Highest score: ' + str(highest_score))
-            unsuccessful = 0
-
-
-
-        #     dG_list.append(dG)
+        # elif dG < 0:
         #     unsuccessful += 1
-        # count += 1
-        # if len(dG_list) > unsuccessful_threshold :#and check_negative_element(dG_list):
-        #     print('Reached maxima')
-        #     print('NO I and some X needs to be removed : ', output)
-        #     break
-        # else:
-        #     pass
-
-        # else:
-        #     e = 2.71828
-        #     T = (21**(-count-20)) + 1
-        #     probability = (e**(dF/T))*100
-        #     if 100 - probability < 10:
-        #         unsuccessful = 0
-        #         # parent_score = child_score
-        #         # parent_keyword = child_keyword
-        #         print('Iteration ' + str(count) + '   child keyword: ' + child_keyword + '  child score: ' + str(
-        #             child_score) + '   Method: ' + str(meth) + '  Highest score: ' + str(highest_score) + '       Probability: ' + str(probability))
         #
-        #     else:
-        #         unsuccessful = unsuccessful + 1
+        # elif dG > 0 and dF < 0:
+        #     print('Iteration ' + str(count) + '   child keyword: ' + child_keyword + '  child score: ' + str(
+        #         child_score) + '   Method: ' + meth + '  Highest score: ' + str(highest_score))
+        #     unsuccessful = 0
 
-            #print('Iteration ' + str(count) + '  Unsuccessful ' + str(unsuccessful))
-        # print(unsuccessful)
+        else:
+            e = 2.71828
+            T = (21**(-count-20)) + 1
+            probability = (e**(dF/T))*100
+            if 100 - probability < 10:
+                unsuccessful = 0
+                # parent_score = child_score
+                # parent_keyword = child_keyword
+                print('Iteration ' + str(count) + '   child keyword: ' + child_keyword + '  child score: ' + str(
+                    child_score) + '   Method: ' + str(meth) + '  Highest score: ' + str(highest_score) + '       Probability: ' + str(probability))
+
+            else:
+                unsuccessful = unsuccessful + 1
+
         if unsuccessful > unsuccessful_threshold:
             print('Reached maxima')
             print('NO I and some X needs to be removed : ', playfair(text, form_grid(highest_likely_key), direction_right=-1, direction_down=-1))
