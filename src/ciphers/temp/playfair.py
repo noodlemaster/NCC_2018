@@ -1,7 +1,10 @@
 import re
 import random
+import threading
+import os
 import numpy as np
 import matplotlib.pyplot as plt
+import time
 from matplotlib.animation import FuncAnimation
 from src.tools.checkenglishness import get_english_score
 from src.tools.text_manipulation import text_split_in_order
@@ -187,7 +190,26 @@ def display_data(x, y):
     return anim
     #plt.show()
 
-def hill_climbing():
+
+
+def update(frame):
+    dir_path = str(os.getcwd()).replace('\\', '/')
+    try:
+        plot_data = np.load(dir_path + '/hill_data.npy')
+    except:
+        plot_data = np.array([])
+    plt.cla()
+    ln = plt.plot(plot_data, 'ro')
+    return ln
+
+def display_live():
+    fig, ax = plt.subplots()
+    ax.set_ylim(0, 400)
+    time.sleep(3)
+    ani = FuncAnimation(fig, update, interval=1000)
+    plt.show()
+
+def hill_climbing(display = False):
     highest_score = 0
     highest_likely_key = ''
     parent_keyword = generate_random_keyword(6, 6)
@@ -195,12 +217,13 @@ def hill_climbing():
     #start_score = get_english_score(playfair(text, form_grid(parent_keyword), direction_right=-1, direction_down=-1))
     count = 1
     unsuccessful = 0
+    plot_data = np.array([])
+    if display:
+        thread = threading.Thread(target=display_live)
+        thread.start()
     while True:
-
         unsuccessful_threshold = 2000
-
         count += 1
-
         dG_list = []
         meth = random_minor_change()
         child_keyword = meth(parent_keyword)
@@ -212,13 +235,8 @@ def hill_climbing():
         parent_keyword = child_keyword
         meth = str(meth).split(' ')[1]
 
-        # fig = plt.figure()
-        # ax1 = fig.add_subplot(111)
-        # anim = animation.FuncAnimation(fig, display_data,
-        #                                frames=100, interval=20, blit=True)
-
-        #display_data(count, child_score)
-
+        plot_data = np.append(plot_data, round(child_score, 1))
+        np.save('hill_data', plot_data)
         if dF > 0:
             unsuccessful = 0
             highest_likely_key = child_keyword
@@ -266,5 +284,5 @@ if __name__ == '__main__':
     #print(get_coordinate(form_grid('noodle'), 'D'))
     #print(rectangle_shift((4,3), (3,0)))
     #generate_random_keyword(2, 18)
-    hill_climbing()
+    hill_climbing(display=True)
     #display_data(1,1)
