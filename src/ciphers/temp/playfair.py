@@ -1,7 +1,8 @@
 import re
 import random
+import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.animation as animation
+from matplotlib.animation import FuncAnimation
 from src.tools.checkenglishness import get_english_score
 from src.tools.text_manipulation import text_split_in_order
 
@@ -126,6 +127,26 @@ def random_substitution(key):
     new_key = ''.join(l)
     return new_key
 
+def random_change_keyword_length(key):
+    def add():
+        i = random.randint(1, 5)
+        part = generate_random_keyword(1, i)
+        return part
+    def minus():
+        i = random.randint(1, len(key)-1)
+        return i
+
+    meth = ['add', 'minus']
+    if len(key) < 3:
+        return add() + key
+    else:
+        method = random.choice(meth)
+        if method == 'add':
+            return add() + key
+        else:
+            j = minus()
+            return key[:j]
+
 def random_minor_change():
     methods = [random_swapping, reverse, random_substitution]
     meth = random.choices(methods, [0.25, 0.25, 0.7], k=1)
@@ -139,29 +160,32 @@ def check_negative_element(list):
             return False
 
 def display_data(x, y):
-    # data = (successful, unsuccessful)
-    # colours = ('green', 'red')
-    # groups = ('successful child', 'unsuccessful child')
     # fig = plt.figure()
-    # ax = fig.add_subplot(1, 1, 1, axisbg="1.0")
-    # for data, color, group in zip(data, colours, groups):
-    #     x, y = data
-    #     ax.scatter(x, y, alpha=0.8, c=color, edgecolors='none', s=30, label=group)
-    # plt.title('Matplot scatter plot')
-    # plt.legend(loc=2)
-    # plt.show()
+    # ax1 = fig.add_subplot(111)
+    # fig.suptitle('Hill Climbing')
+    # plt.xlabel('Count')
+    # plt.ylabel('Englishness score')
+    # plt.axis([0, 10**3, 0, 500])
+    # ax1.scatter(x, y)
+    # plt.pause(0.02)
+    # plt.draw()
     fig = plt.figure()
     ax1 = fig.add_subplot(111)
-    plt.ion()
     fig.suptitle('Hill Climbing')
     plt.xlabel('Count')
     plt.ylabel('Englishness score')
-    plt.axis([0, 10**2, 0, 500])
-    #plt.clf()
-    ax1.scatter(x, y)
-    plt.pause(0.001)
-    plt.ioff()
-    return ax1
+    plt.axis([0, 10**3, 0, 500])
+    point = ax1.scatter(x, y)
+    def animation():
+        point.set_xdata()
+        point.set_ydata(y)
+        #return point
+    # def update():
+    #     return x, y
+    anim = FuncAnimation(fig, animation, frames=10, interval=200, blit=True)
+    plt.show()
+    return anim
+    #plt.show()
 
 def hill_climbing():
     highest_score = 0
@@ -170,10 +194,11 @@ def hill_climbing():
     parent_score = get_english_score(playfair(text, form_grid(parent_keyword), direction_right=-1, direction_down=-1))
     #start_score = get_english_score(playfair(text, form_grid(parent_keyword), direction_right=-1, direction_down=-1))
     count = 1
+    unsuccessful = 0
     while True:
 
-        unsuccessful_threshold = 1000
-        unsuccessful = 0
+        unsuccessful_threshold = 2000
+
         count += 1
 
         dG_list = []
@@ -191,7 +216,8 @@ def hill_climbing():
         # ax1 = fig.add_subplot(111)
         # anim = animation.FuncAnimation(fig, display_data,
         #                                frames=100, interval=20, blit=True)
-        display_data(count, child_score)
+
+        #display_data(count, child_score)
 
         if dF > 0:
             unsuccessful = 0
@@ -201,14 +227,15 @@ def hill_climbing():
             # parent_keyword = child_keyword
             print('Iteration ' + str(count) + '   child keyword: ' + child_keyword + '  child score: ' + str(
                 child_score) + '   Method: ' + meth + '  Highest score: ' + str(highest_score))
+
         elif dG < 0:
             unsuccessful += 1
-            pass
+
         elif dG > 0 and dF < 0:
             print('Iteration ' + str(count) + '   child keyword: ' + child_keyword + '  child score: ' + str(
                 child_score) + '   Method: ' + meth + '  Highest score: ' + str(highest_score))
             unsuccessful = 0
-            pass
+
 
 
         #     dG_list.append(dG)
@@ -223,23 +250,26 @@ def hill_climbing():
 
         # else:
         #     e = 2.71828
-        #     T = 9*3**(-count) + 2
+        #     T = (21**(-count-20)) + 1
         #     probability = (e**(dF/T))*100
         #     if 100 - probability < 10:
+        #         unsuccessful = 0
         #         # parent_score = child_score
         #         # parent_keyword = child_keyword
         #         print('Iteration ' + str(count) + '   child keyword: ' + child_keyword + '  child score: ' + str(
-        #             child_score) + '   Method: ' + str(meth) + '  Probability: ' + str(probability))
+        #             child_score) + '   Method: ' + str(meth) + '  Highest score: ' + str(highest_score) + '       Probability: ' + str(probability))
+        #
         #     else:
-        #         unsuccessful += 1
-        #     #print('Iteration ' + str(count) + '  Unsuccessful ' + str(unsuccessful))
-        #
-        # #count += 1
-        #
+        #         unsuccessful = unsuccessful + 1
+
+            #print('Iteration ' + str(count) + '  Unsuccessful ' + str(unsuccessful))
+        # print(unsuccessful)
         if unsuccessful > unsuccessful_threshold:
             print('Reached maxima')
-            print('NO I and some X needs to be removed : ', output)
+            print('NO I and some X needs to be removed : ', playfair(text, form_grid(highest_likely_key), direction_right=-1, direction_down=-1))
             break
+        else:
+            continue
 
 if __name__ == '__main__':
     file = open('../../../questions/example/playfair_1.txt')
