@@ -10,3 +10,5 @@
 5b: Reverse and keyword cipher: reichstadt
 6a: keyword: nautilus
 6b: Transposition k=5 [1, 0, 4, 3, 2]
+7a: Substitution cipher
+7b: Transposition hard k=7 [1, 6, 4, 2, 0, 5, 3]
