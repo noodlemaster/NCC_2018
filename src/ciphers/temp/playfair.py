@@ -8,6 +8,7 @@ import time
 from matplotlib.animation import FuncAnimation
 from src.tools.checkenglishness import get_english_score
 from src.tools.text_manipulation import text_split_in_order
+from src.tools.hill_climbing import *
 
 alphabets = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
              'V', 'W', 'X', 'Y', 'Z']
@@ -65,7 +66,8 @@ def rectangle_shift(coordinate_a, coordinate_b):
         coord_b = (coordinate_b[0] - delta_x, coordinate_b[1])
     return coord_a, coord_b
 
-def playfair(text, table, direction_right = 1, direction_down = 1):
+def playfair(text, keyword, direction_right = -1, direction_down = -1):
+    table = form_grid(keyword)
     plaintext = []
     text = re.sub('I','J', text)
     #text = re.sub('J', 'I', text)
@@ -209,80 +211,87 @@ def display_live():
     ani = FuncAnimation(fig, update, interval=1000)
     plt.show()
 
-def hill_climbing(display = False):
-    highest_score = 0
-    highest_likely_key = ''
-    parent_keyword = generate_random_keyword(6, 6)
-    parent_score = get_english_score(playfair(text, form_grid(parent_keyword), direction_right=-1, direction_down=-1))
-    #start_score = get_english_score(playfair(text, form_grid(parent_keyword), direction_right=-1, direction_down=-1))
-    count = 1
-    unsuccessful = 0
-    plot_data = np.array([])
-    if display:
-        thread = threading.Thread(target=display_live)
-        thread.start()
-    while True:
-        unsuccessful_threshold = 2000
-        count += 1
-        dG_list = []
-        meth = random_minor_change()
-        child_keyword = meth(parent_keyword)
-        output = playfair(text, form_grid(child_keyword), direction_right=-1, direction_down=-1)
-        child_score = get_english_score(output)
-        dF = child_score - highest_score
-        dG = child_score - parent_score
-        parent_score = child_score
-        parent_keyword = child_keyword
-        meth = str(meth).split(' ')[1]
-
-        plot_data = np.append(plot_data, round(child_score, 1))
-        np.save('hill_data', plot_data)
-        if dF > 0:
-            unsuccessful = 0
-            highest_likely_key = child_keyword
-            highest_score = child_score
-            # parent_score = child_score
-            # parent_keyword = child_keyword
-            print('Iteration ' + str(count) + '   child keyword: ' + child_keyword + '  child score: ' + str(
-                child_score) + '   Method: ' + meth + '  Highest score: ' + str(highest_score))
-
-        # elif dG < 0:
-        #     unsuccessful += 1
-        #
-        # elif dG > 0 and dF < 0:
-        #     print('Iteration ' + str(count) + '   child keyword: ' + child_keyword + '  child score: ' + str(
-        #         child_score) + '   Method: ' + meth + '  Highest score: ' + str(highest_score))
-        #     unsuccessful = 0
-
-        else:
-            e = 2.71828
-            T = (21**(-count-20)) + 1
-            probability = (e**(dF/T))*100
-            if 100 - probability < 10:
-                unsuccessful = 0
-                # parent_score = child_score
-                # parent_keyword = child_keyword
-                print('Iteration ' + str(count) + '   child keyword: ' + child_keyword + '  child score: ' + str(
-                    child_score) + '   Method: ' + str(meth) + '  Highest score: ' + str(highest_score) + '       Probability: ' + str(probability))
-
-            else:
-                unsuccessful = unsuccessful + 1
-
-        if unsuccessful > unsuccessful_threshold:
-            print('Reached maxima')
-            print('NO I and some X needs to be removed : ', playfair(text, form_grid(highest_likely_key), direction_right=-1, direction_down=-1))
-            break
-        else:
-            continue
+# def hill_climbing(display = False):
+#     highest_score = 0
+#     highest_likely_key = ''
+#     parent_keyword = generate_random_keyword(6, 6)
+#     parent_score = get_english_score(playfair(text, form_grid(parent_keyword), direction_right=-1, direction_down=-1))
+#     #start_score = get_english_score(playfair(text, form_grid(parent_keyword), direction_right=-1, direction_down=-1))
+#     count = 1
+#     unsuccessful = 0
+#     plot_data = np.array([])
+#     if display:
+#         thread = threading.Thread(target=display_live)
+#         thread.start()
+#     while True:
+#         unsuccessful_threshold = 2000
+#         count += 1
+#         dG_list = []
+#         meth = random_minor_change()
+#         child_keyword = meth(parent_keyword)
+#         output = playfair(text, form_grid(child_keyword), direction_right=-1, direction_down=-1)
+#         child_score = get_english_score(output)
+#         dF = child_score - highest_score
+#         dG = child_score - parent_score
+#         parent_score = child_score
+#         parent_keyword = child_keyword
+#         meth = str(meth).split(' ')[1]
+#
+#         plot_data = np.append(plot_data, round(child_score, 1))
+#         np.save('hill_data', plot_data)
+#         if dF > 0:
+#             unsuccessful = 0
+#             highest_likely_key = child_keyword
+#             highest_score = child_score
+#             # parent_score = child_score
+#             # parent_keyword = child_keyword
+#             print('Iteration ' + str(count) + '   child keyword: ' + child_keyword + '  child score: ' + str(
+#                 child_score) + '   Method: ' + meth + '  Highest score: ' + str(highest_score))
+#
+#         # elif dG < 0:
+#         #     unsuccessful += 1
+#         #
+#         # elif dG > 0 and dF < 0:
+#         #     print('Iteration ' + str(count) + '   child keyword: ' + child_keyword + '  child score: ' + str(
+#         #         child_score) + '   Method: ' + meth + '  Highest score: ' + str(highest_score))
+#         #     unsuccessful = 0
+#
+#         else:
+#             e = 2.71828
+#             T = (21**(-count-20)) + 1
+#             probability = (e**(dF/T))*100
+#             if 100 - probability < 10:
+#                 unsuccessful = 0
+#                 # parent_score = child_score
+#                 # parent_keyword = child_keyword
+#                 print('Iteration ' + str(count) + '   child keyword: ' + child_keyword + '  child score: ' + str(
+#                     child_score) + '   Method: ' + str(meth) + '  Highest score: ' + str(highest_score) + '       Probability: ' + str(probability))
+#
+#             else:
+#                 unsuccessful = unsuccessful + 1
+#
+#         if unsuccessful > unsuccessful_threshold:
+#             print('Reached maxima')
+#             print('NO I and some X needs to be removed : ', playfair(text, form_grid(highest_likely_key), direction_right=-1, direction_down=-1))
+#             break
+#         else:
+#             continue
 
 if __name__ == '__main__':
     file = open('../../../questions/example/playfair_1.txt')
     text = file.read()
     file.close()
-    #form_grid('noodle')
-    #print(get_english_score(playfair(text, form_grid('noodle'), direction_right = -1, direction_down = -1)))
-    #print(get_coordinate(form_grid('noodle'), 'D'))
-    #print(rectangle_shift((4,3), (3,0)))
-    #generate_random_keyword(2, 18)
-    hill_climbing(display=True)
-    #display_data(1,1)
+
+    config = {
+        'T0': 30,
+        'T_lowest': 0,
+        'NumberOfIterationPerT': 1000,
+        'FunctionT': T_mutilier,
+        'CipherType': playfair,
+        'LengthOfKey_lower': 5,
+        'LengthOfKey_upper': 16,
+        'Probability_threshold': 0.9
+    }
+
+    hill_climbing(text, config)
+    #print(playfair(text, 'NOODLE'))
