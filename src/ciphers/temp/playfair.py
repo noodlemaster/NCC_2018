@@ -215,15 +215,15 @@ if __name__ == '__main__':
     file.close()
 
     config = {
-        'T0': 30,
+        'T0': 33,
         'T_lowest': 0,
         'NumberOfIterationPerT': 1000,
         'FunctionT': T_minus,
         'CipherType': playfair,
-        'Keyword/Grid': 'grid',
+        'Keyword/Grid': 'keyword',
         'LengthOfKey_lower': 5,
         'LengthOfKey_upper': 16,
-        'Probability_threshold': 0.75
+        'Probability_threshold': 0.8
     }
 
     hill_climbing(text, config)

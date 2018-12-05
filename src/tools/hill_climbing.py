@@ -156,7 +156,7 @@ def table2str(table):
 def T_minus(t, count, STEP = 0.15):
     return t - STEP
 
-def T_mutilier(t, count, multiplier = 0.9):
+def T_mutilier(t, count, multiplier = 0.95):
     return t*multiplier
 
 def T_exp(t0, count, base = 0.95):
@@ -194,9 +194,10 @@ def hill_climbing(text, config_dict):
     #print(parent_score)
     highest_score = parent_score
     all_keys = []
+    display_score = ''
 
     while T > T_lowest:
-        #print(count)
+        print(count)
         countOfinter = 0
 
         while countOfinter <= NumberOfIterationPerT:
@@ -210,11 +211,12 @@ def hill_climbing(text, config_dict):
                 dF = child_score - parent_score
                 #print(child_score)
                 if dF >= 0:
+                    display_score = parent_score
                     parent_keyword = child_keyword
                     parent_score = child_score
                     if child_score > highest_score:
                         highest_score = child_score
-                    print('#Iteration: ' + str(count) + '  Keyword: ' + table2str(parent_keyword) + '  Score: ' + str(child_score) + ' Highest score: ' + str(highest_score))
+                    print('#Iteration: ' + str(count) + '  Keyword: ' + table2str(parent_keyword) + '  Score: ' + str(child_score) + ' Highest score: ' + str(highest_score) + '  Parent score:  ' + str(display_score))
                 else:
                     prob = e**(dF/T)
                     if prob > Probability_threshold:
