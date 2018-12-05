@@ -1,6 +1,6 @@
 from src.ciphers.transposition import extract_alphabets
 
-inputfile = open('../../questions/2018/6b.txt', 'r')
+inputfile = open('../../questions/2018/8a_a.txt', 'r')
 text = inputfile.read()
 inputfile.close()
 text = extract_alphabets(text)
