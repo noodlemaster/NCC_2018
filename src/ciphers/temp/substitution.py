@@ -14,21 +14,22 @@ def substitution(text, keyword):
 
 if __name__ == '__main__':
     year = '2018'
-    question = '4a'
+    question = '4b'
     file = open('../../../questions/' + year + '/' + question + '.txt', 'r')
     text = file.read()
     file.close()
 
     config = {
-        'T0': 25,
+        'T0': 30,
         'T_lowest': 0,
-        'NumberOfIterationPerT': 10,
+        'NumberOfIterationPerT': 50,
         'FunctionT': T_mutilier,
         'CipherType': substitution,
+        'Keyword/Grid': 'keyword',
         'LengthOfKey_lower': 5,
         'LengthOfKey_upper': 17,
-        'Probability_threshold': 0.75
+        'Probability_threshold': 0.8
     }
 
     hill_climbing(text, config)
-   #  print(substitution(text, 'LIDIARR'))
+    #print(substitution(text, 'REAQRRPREQVAPPITVIIKR'))

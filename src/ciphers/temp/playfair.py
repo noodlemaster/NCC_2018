@@ -1,5 +1,3 @@
-import re
-import random
 import threading
 import os
 import numpy as np
@@ -15,32 +13,35 @@ alphabets = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N
 
 '''NO I'''
 def form_grid(keyword):
-    table = []
-    list_keyword = []
-    for i in range(len(keyword)):
-        if keyword[i].upper() not in list_keyword:
-            list_keyword.append(keyword[i].upper())
-    for each in alphabets:
-        if each not in list_keyword:
-            list_keyword.append(each)
-    if list_keyword.index('I') > list_keyword.index('J'):
-        list_keyword[list_keyword.index('I')] = 'J'
-        list_keyword.remove(list_keyword[list_keyword.index('J')])
+    if type(keyword) is list:
+        return keyword
     else:
-        list_keyword.remove(list_keyword[list_keyword.index('I')])
-    # if list_keyword.index('J') > list_keyword.index('I'):
-    #     list_keyword.remove(list_keyword[list_keyword.index('J')])
-    # else:
-    #     list_keyword.remove(list_keyword[list_keyword.index('I')])
-    #     list_keyword[list_keyword.index('J')] = 'I'
+        table = []
+        list_keyword = []
+        for i in range(len(keyword)):
+            if keyword[i].upper() not in list_keyword:
+                list_keyword.append(keyword[i].upper())
+        for each in alphabets:
+            if each not in list_keyword:
+                list_keyword.append(each)
+        if list_keyword.index('I') > list_keyword.index('J'):
+            list_keyword[list_keyword.index('I')] = 'J'
+            list_keyword.remove(list_keyword[list_keyword.index('J')])
+        else:
+            list_keyword.remove(list_keyword[list_keyword.index('I')])
+        # if list_keyword.index('J') > list_keyword.index('I'):
+        #     list_keyword.remove(list_keyword[list_keyword.index('J')])
+        # else:
+        #     list_keyword.remove(list_keyword[list_keyword.index('I')])
+        #     list_keyword[list_keyword.index('J')] = 'I'
 
-    while len(list_keyword)>0:
-        row = list_keyword[0:5]
-        table.append(row)
-        del list_keyword[:5]
+        while len(list_keyword)>0:
+            row = list_keyword[0:5]
+            table.append(row)
+            del list_keyword[:5]
 
-    #print(table)
-    return table
+        #print(table)
+        return table
 
 def get_coordinate(table, target):
     for y in range(0, len(table)):
@@ -68,15 +69,17 @@ def rectangle_shift(coordinate_a, coordinate_b):
 
 def playfair(text, keyword, direction_right = -1, direction_down = -1):
     table = form_grid(keyword)
+    #print(table)
     plaintext = []
-    text = re.sub('I','J', text)
-    #text = re.sub('J', 'I', text)
-    bigram_list = text_split_in_order(text, 2)
+    text1 = re.sub('I','J', text) #no I
+    #text1 = re.sub('J', 'I', text)
+    bigram_list = text_split_in_order(text1, 2)
     for each in bigram_list:
         a = each[0]
         b = each[1]
         coord_a = get_coordinate(table, a)
         coord_b = get_coordinate(table, b)
+        #print(a, b, coord_a, coord_b)
         if coord_a[1] == coord_b[1]:  #On the same horizontal line
             coord_a = horizontal_shift(coord_a, direction_right)
             coord_b = horizontal_shift(coord_b, direction_right)
@@ -94,75 +97,6 @@ def playfair(text, keyword, direction_right = -1, direction_down = -1):
     return output
     # output = ['NO I and some X needs to be removed: ', ''.join(plaintext)]
     # print(output)
-
-def generate_random_keyword(lowerlimit, upperlimit):
-    keyword = ''
-    keyword_length = random.randint(lowerlimit, upperlimit)
-    #print(keyword_length)
-    while keyword_length > 0:
-        char = random.choice(alphabets)
-        keyword += char
-        keyword_length -= 1
-    return keyword
-
-def random_swapping(key):
-    l = list(key)
-    i, j = random.randint(0, len(l)-1), random.randint(0, len(l)-1)
-    if i != j:
-        pass
-    else:
-        i = (i + 1)%(len(key))
-    l[i], l[j] = l[j], l[i]
-    new_key = ''.join(l)
-    return new_key
-
-def reverse(key):
-    key = key[::-1]
-    return key
-
-def random_substitution(key):
-    l = list(key)
-    i = random.randint(0, len(key)-1)
-    target = random.choice(alphabets)
-    if l[i] != target:
-        l[i] = target
-    else:
-        i  = (i + 1)%(len(key))
-        l[i] = target
-    new_key = ''.join(l)
-    return new_key
-
-def random_change_keyword_length(key):
-    def add():
-        i = random.randint(1, 5)
-        part = generate_random_keyword(1, i)
-        return part
-    def minus():
-        i = random.randint(1, len(key)-1)
-        return i
-
-    meth = ['add', 'minus']
-    if len(key) < 3:
-        return add() + key
-    else:
-        method = random.choice(meth)
-        if method == 'add':
-            return add() + key
-        else:
-            j = minus()
-            return key[:j]
-
-def random_minor_change():
-    methods = [random_swapping, reverse, random_substitution]
-    meth = random.choices(methods, [0.25, 0.25, 0.7], k=1)
-    return meth[0]
-
-def check_negative_element(list):
-    for each in list:
-        if each < 0:
-            return True
-        else:
-            return False
 
 def display_data(x, y):
     # fig = plt.figure()
@@ -191,8 +125,6 @@ def display_data(x, y):
     plt.show()
     return anim
     #plt.show()
-
-
 
 def update(frame):
     dir_path = str(os.getcwd()).replace('\\', '/')
@@ -286,12 +218,16 @@ if __name__ == '__main__':
         'T0': 30,
         'T_lowest': 0,
         'NumberOfIterationPerT': 1000,
-        'FunctionT': T_mutilier,
+        'FunctionT': T_minus,
         'CipherType': playfair,
+        'Keyword/Grid': 'grid',
         'LengthOfKey_lower': 5,
         'LengthOfKey_upper': 16,
-        'Probability_threshold': 0.9
+        'Probability_threshold': 0.75
     }
 
     hill_climbing(text, config)
-    #print(playfair(text, 'NOODLE'))
+    #print(get_english_score(playfair(text, 'KUPTVNXHLSCWBGDROFAJQEMYZ')))
+    #form_grid('FAOJBY')
+    #print(playfair(text, generate_random_5x5grid()))
+    #print(get_coordinate(generate_random_5x5grid(), 'R'))
