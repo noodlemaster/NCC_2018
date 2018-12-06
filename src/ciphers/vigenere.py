@@ -165,8 +165,8 @@ def display_top_result(results, numbertop=5):
 
 if __name__ == '__main__':
     year = '2018'
-    question = '7a'
+    question = '9b'
     file = open('../../questions/' + year + '/' + question + '.txt', 'r')
     text = file.read()
     file.close()
-    display_top_result(decipher_vigenere(text, affine=False, use_a=False, display=False, reverse=False, auto=True))
+    display_top_result(decipher_vigenere(text, affine=False, use_a=False, display=False, reverse=True, auto=True))

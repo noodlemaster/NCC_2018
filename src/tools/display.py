@@ -74,7 +74,7 @@ def show_n_gram_frequency(text, n, top=10):
 
 if __name__ == '__main__':
     year = '2018'
-    question = '8a'
+    question = '9b'
     # file = open('../../questions/example/hill2x2.txt', 'r')
     file = open('../../questions/' + year + '/' + question + '.txt', 'r', errors='replace')
     text = file.read()

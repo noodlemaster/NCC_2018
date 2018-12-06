@@ -17,7 +17,11 @@ def extract_alphabets(text):
     return textnospace
 
 def decrypt_mapping(text, mapping):
-    text = text.upper()
+    for k in keyword:
+        if keyword_no_double.find(k.lower()) == -1:
+            keyword_no_double += k.lower()
+    for p in range(len(left_alpabets)):
+        text = text.upper()
     for each in mapping:
         old, new = each[1], str.lower(each[0])
         text = re.sub(old, new, text)
@@ -31,20 +35,16 @@ def get_maps_with_keyword(keyword):
         if keyword.lower().find(c.lower()) == -1:
             left_alpabets.append(c.lower())
     keyword_no_double = ""
-    for k in keyword:
-        if keyword_no_double.find(k.lower()) == -1:
-            keyword_no_double += k.lower()
-    for p in range(len(left_alpabets)):
-        map = []
-        for i in range(26):
-            if i < len(keyword_no_double):
-                map.append([alphabets[i].lower(), keyword_no_double[i].upper()])
-            else:
-                n = i - len(keyword_no_double) + p
-                if n >= len(left_alpabets):
-                    n = n % len(left_alpabets)
-                map.append([alphabets[i].lower(), left_alpabets[n].upper()])
-        maps.append(map)
+    map = []
+    for i in range(26):
+        if i < len(keyword_no_double):
+            map.append([alphabets[i].lower(), keyword_no_double[i].upper()])
+        else:
+            n = i - len(keyword_no_double) + p
+            if n >= len(left_alpabets):
+                n = n % len(left_alpabets)
+            map.append([alphabets[i].lower(), left_alpabets[n].upper()])
+    maps.append(map)
     return maps
 
 def get_map_with_keyword(keyword):
@@ -178,7 +178,7 @@ if __name__ == '__main__':
     year = '2018'
     question = '5a'
     file = open('../../questions/' + year + '/' + question + '.txt', 'r', errors='replace')
-    print(year+ '/' + question)
+    print(year + '/' + question)
     text = file.read()
     file.close()
     show_frequency(text, False)
