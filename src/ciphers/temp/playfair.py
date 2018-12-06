@@ -24,16 +24,16 @@ def form_grid(keyword):
         for each in alphabets:
             if each not in list_keyword:
                 list_keyword.append(each)
-        if list_keyword.index('I') > list_keyword.index('J'):
-            list_keyword[list_keyword.index('I')] = 'J'
-            list_keyword.remove(list_keyword[list_keyword.index('J')])
-        else:
-            list_keyword.remove(list_keyword[list_keyword.index('I')])
-        # if list_keyword.index('J') > list_keyword.index('I'):
+        # if list_keyword.index('I') > list_keyword.index('J'):
+        #     list_keyword[list_keyword.index('I')] = 'J'
         #     list_keyword.remove(list_keyword[list_keyword.index('J')])
         # else:
         #     list_keyword.remove(list_keyword[list_keyword.index('I')])
-        #     list_keyword[list_keyword.index('J')] = 'I'
+        if list_keyword.index('J') > list_keyword.index('I'):
+            list_keyword.remove(list_keyword[list_keyword.index('J')])
+        else:
+            list_keyword.remove(list_keyword[list_keyword.index('I')])
+            list_keyword[list_keyword.index('J')] = 'I'
 
         while len(list_keyword)>0:
             row = list_keyword[0:5]
@@ -71,8 +71,8 @@ def playfair(text, keyword, direction_right = -1, direction_down = -1):
     table = form_grid(keyword)
     #print(table)
     plaintext = []
-    text1 = re.sub('I','J', text) #no I
-    #text1 = re.sub('J', 'I', text)
+    # text1 = re.sub('I','J', text) #no I
+    text1 = re.sub('J', 'I', text)
     bigram_list = text_split_in_order(text1, 2)
     for each in bigram_list:
         a = each[0]
@@ -210,7 +210,7 @@ def display_live():
 #             continue
 
 if __name__ == '__main__':
-    file = open('../../../questions/example/playfair_1.txt')
+    file = open('../../../questions/example/playfair_2.txt')
     text = file.read()
     file.close()
 
@@ -227,7 +227,7 @@ if __name__ == '__main__':
     }
 
     hill_climbing(text, config)
-    #print(get_english_score(playfair(text, 'KUPTVNXHLSCWBGDROFAJQEMYZ')))
+    # print(get_english_score(playfair(text, 'KUPTVNXHLSCWBGDROFAJQEMYZ')))
     #form_grid('FAOJBY')
-    #print(playfair(text, generate_random_5x5grid()))
+    # print(playfair(text, 'NIODLE'))
     #print(get_coordinate(generate_random_5x5grid(), 'R'))
