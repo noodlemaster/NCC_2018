@@ -12,3 +12,7 @@
 6b: Transposition k=5 [1, 0, 4, 3, 2]
 7a: Substitution cipher
 7b: Transposition hard k=7 [1, 6, 4, 2, 0, 5, 3]
+8a: Transposition hard
+8b: Vigenere cipher keyword=shadow
+9a: Vigenere cipher keyword=dynamite
+9b: Vigenere cipher keyword=yekrut (turkey) reverse
