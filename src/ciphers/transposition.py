@@ -5,6 +5,8 @@ import time
 from src.tools.checkenglishness import get_all_english_score_in_text, get_english_score
 from src.tools.text_manipulation import reverse_text, text_split_in_order
 
+alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+
 def get_factors(n):
     factors = []
     for i in range(n):
@@ -115,11 +117,11 @@ def display_top_result(results, text, numbertop = 5):
 if __name__ == '__main__':
     start = time.time()
     # inputfile = open('../../questions/example/transposition.txt', 'r')
-    inputfile = open('../../questions/2018/6b.txt', 'r')
+    inputfile = open('../../questions/2018/8a.txt', 'r')
     text = inputfile.read()
     inputfile.close()
     # text = reverse_text(text)
-    # display_top_result(decrypt_all_trasposition(text, 7, 3, easy=True), text)
+    # display_top_result(decrypt_all_trasposition(text, 8, 8, easy=False), text)
     # display_top_result(decrypt_all_trasposition(reverse_text(text), 5))
     # text = reverse_text(text)
     print(decrypt_transposition(text, [1,0,4,3,2]))

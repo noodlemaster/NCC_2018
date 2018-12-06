@@ -164,8 +164,8 @@ def display_top_result(results, numbertop=5):
         print(result[2])
 
 if __name__ == '__main__':
-    year = '2017'
-    question = '6b'
+    year = '2018'
+    question = '7a'
     file = open('../../questions/' + year + '/' + question + '.txt', 'r')
     text = file.read()
     file.close()

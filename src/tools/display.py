@@ -73,16 +73,16 @@ def show_n_gram_frequency(text, n, top=10):
     pyplot.show()
 
 if __name__ == '__main__':
-    year = '2016'
-    question = '7b'
+    year = '2018'
+    question = '8a'
     # file = open('../../questions/example/hill2x2.txt', 'r')
     file = open('../../questions/' + year + '/' + question + '.txt', 'r', errors='replace')
     text = file.read()
     file.close()
-    # show_frequency(text, True)
-    # show_ioc(text, 55, True)
-    # show_n_gram_frequency(text, 2, top=20)
-    # show_n_gram_frequency(text, 3, top=10)
+    show_frequency(text, True)
+    show_ioc(text, 55, True)
+    show_n_gram_frequency(text, 2, top=20)
+    show_n_gram_frequency(text, 3, top=10)
     # show_frequency(False, True)
     # show_n_gram_frequency(False, 2, top=20)
     # show_n_gram_frequency(False, 3, top=10)
