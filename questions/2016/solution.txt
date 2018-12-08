@@ -11,6 +11,6 @@
 6a: Vigenere [13, 8, 0]
 6b: Vigenere [7, 9, 0, 18, 13, 22, 9]
 7a: Vigenere [22, 8, 6, 15, 15, 18, 19] and reverse
-7b:
+7b: Bifid cipher period =4 keyword = LIGO
 8a: Hill cipher keyword = HILL
 8b: Split by 2 and read 5 digits of base 2 numbers in vertical column
