@@ -12,7 +12,7 @@ alphabets = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N
              'V', 'W', 'X', 'Y', 'Z']
 
 '''NO I'''
-def form_grid(keyword):
+def form_grid(keyword, replaced = 'J', replacment = 'I'):
     if type(keyword) is list:
         return keyword
     else:
@@ -24,23 +24,18 @@ def form_grid(keyword):
         for each in alphabets:
             if each not in list_keyword:
                 list_keyword.append(each)
-        # if list_keyword.index('I') > list_keyword.index('J'):
-        #     list_keyword[list_keyword.index('I')] = 'J'
-        #     list_keyword.remove(list_keyword[list_keyword.index('J')])
-        # else:
-        #     list_keyword.remove(list_keyword[list_keyword.index('I')])
-        if list_keyword.index('J') > list_keyword.index('I'):
-            list_keyword.remove(list_keyword[list_keyword.index('J')])
+        if list_keyword.index(replaced) > list_keyword.index(replacment):
+            list_keyword.remove(list_keyword[list_keyword.index(replaced)])
         else:
-            list_keyword.remove(list_keyword[list_keyword.index('I')])
-            list_keyword[list_keyword.index('J')] = 'I'
+            list_keyword.remove(list_keyword[list_keyword.index(replacment)])
+            list_keyword[list_keyword.index(replaced)] = replacment
 
         while len(list_keyword)>0:
             row = list_keyword[0:5]
             table.append(row)
             del list_keyword[:5]
 
-        #print(table)
+
         return table
 
 def get_coordinate(table, target):
@@ -71,8 +66,8 @@ def playfair(text, keyword, direction_right = -1, direction_down = -1):
     table = form_grid(keyword)
     #print(table)
     plaintext = []
-    # text1 = re.sub('I','J', text) #no I
-    text1 = re.sub('J', 'I', text)
+    #text1 = re.sub('I','J', text) #no I
+    text1 = re.sub('J', 'I', text) #no J
     bigram_list = text_split_in_order(text1, 2)
     for each in bigram_list:
         a = each[0]
@@ -220,7 +215,7 @@ if __name__ == '__main__':
         'NumberOfIterationPerT': 1000,
         'FunctionT': T_minus,
         'CipherType': playfair,
-        'Keyword/Grid': 'keyword',
+        'Keyword/Grid': 'keyword',  #grid/keyword
         'LengthOfKey_lower': 5,
         'LengthOfKey_upper': 16,
         'Probability_threshold': 0.8
@@ -231,3 +226,4 @@ if __name__ == '__main__':
     #form_grid('FAOJBY')
     # print(playfair(text, 'NIODLE'))
     #print(get_coordinate(generate_random_5x5grid(), 'R'))
+    #form_grid('JHGCAY')

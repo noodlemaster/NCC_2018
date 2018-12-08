@@ -28,7 +28,7 @@ def generate_random_keyword(lowerlimit, upperlimit, list):
         keyword_length -= 1
     return keyword
 
-def generate_random_5x5grid(deleted_letter = 'I'):
+def generate_random_5x5grid(deleted_letter = 'J'):
     al = alphabets()
     al.remove(deleted_letter.upper())
     grid = []
@@ -194,7 +194,6 @@ def hill_climbing(text, config_dict):
     #print(parent_score)
     highest_score = parent_score
     all_keys = []
-    display_score = ''
 
     while T > T_lowest:
         print(count)
@@ -211,12 +210,12 @@ def hill_climbing(text, config_dict):
                 dF = child_score - parent_score
                 #print(child_score)
                 if dF >= 0:
-                    display_score = parent_score
+                    displayscore = parent_score
                     parent_keyword = child_keyword
                     parent_score = child_score
                     if child_score > highest_score:
                         highest_score = child_score
-                    print('#Iteration: ' + str(count) + '  Keyword: ' + table2str(parent_keyword) + '  Score: ' + str(child_score) + ' Highest score: ' + str(highest_score) + '  Parent score:  ' + str(display_score))
+                    print('#Iteration: ' + str(count) + '  Keyword: ' + table2str(parent_keyword) + '  Score: ' + str(child_score) + ' Highest score: ' + str(highest_score) + '  Parent score:  ' + str(displayscore))
                 else:
                     prob = e**(dF/T)
                     if prob > Probability_threshold:
