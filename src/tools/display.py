@@ -2,6 +2,7 @@ from matplotlib import pyplot
 
 from src.tools.frequency import get_frequency, get_n_gram_frequency
 from src.tools.index_of_coincidence import get_average_ioc_from_1_to_k, get_first_ioc_from_1_to_k
+from src.tools.text_manipulation import reverse_text
 
 alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
             'V', 'W', 'X', 'Y', 'Z']
@@ -73,15 +74,15 @@ def show_n_gram_frequency(text, n, top=10):
     pyplot.show()
 
 if __name__ == '__main__':
-    year = '2018'
-    question = '9b'
-    # file = open('../../questions/example/hill2x2.txt', 'r')
-    file = open('../../questions/' + year + '/' + question + '.txt', 'r', errors='replace')
+    year = '2017'
+    question = '8b_3'
+    file = open('../../questions/' + year + '/' + question + '.txt', 'r')
     text = file.read()
     file.close()
     show_frequency(text, True)
-    show_ioc(text, 55, True)
-    show_n_gram_frequency(text, 2, top=20)
+    # text = reverse_text(text)
+    show_ioc(text, 50, True)
+    # show_n_gram_frequency(text, 2, top=20)
     show_n_gram_frequency(text, 3, top=10)
     # show_frequency(False, True)
     # show_n_gram_frequency(False, 2, top=20)
