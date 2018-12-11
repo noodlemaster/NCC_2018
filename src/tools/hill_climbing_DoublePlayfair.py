@@ -1,5 +1,33 @@
 from src.tools.hill_climbing import *
 
+# def random_change_keyword_length1(key):
+#     def add():
+#         i = random.randint(1, 25 - len(key))
+#         part = generate_random_keyword(1, i, get_existing_letter(key))
+#         l1 = list(set(list(part)))
+#         l = list(set(list(key)))
+#         for i in l1:
+#             for j in l:
+#                 if i == j:
+#                     i = random.choice(get_existing_letter(key))
+#         return ''.join(l1)
+#     def minus():
+#         i = random.randint(4, len(key)-2)
+#         return i
+#
+#     meth = ['add', 'minus']
+#     if len(key) < 9:
+#         return add() + key
+#     if len(key) > 22:
+#         return key[minus():]
+#     else:
+#         method = random.choice(meth)
+#         if method == 'add':
+#             return add() + key
+#         else:
+#             j = minus()
+#             return key[:j]
+
 def random_change_keyword_length1(key):
     def add():
         i = random.randint(1, 25 - len(key))
@@ -10,23 +38,18 @@ def random_change_keyword_length1(key):
             for j in l:
                 if i == j:
                     i = random.choice(get_existing_letter(key))
-        return ''.join(l1)
+        return key + ''.join(l1)
     def minus():
-        i = random.randint(4, len(key)-3)
-        return i
-
-    meth = ['add', 'minus']
-    if len(key) < 9:
-        return add() + key
-    if len(key) > 22:
-        return key[:minus()]
+        i = random.randint(1, len(key) - 3)
+        return key[:i]
+    if len(key) < 4:
+        return add()
     else:
-        method = random.choice(meth)
+        method = random.choice(['add', 'minus'])
         if method == 'add':
-            return add() + key
+            return add()
         else:
-            j = minus()
-            return key[:j]
+            return minus()
 
 def random_minor_change1(type):
     if type == 'grid':
@@ -41,7 +64,8 @@ def random_minor_change1(type):
         return meth[0]
 
 def random_split_keyword(keyword):
-    i = random.randint(3, len(keyword) - 1)
+    if len(keyword) > 3:
+        i = random.randint(3, len(keyword) - 1)
     l = []
     l.append(keyword[:i])
     l.append(keyword[i:len(keyword)])
@@ -113,4 +137,6 @@ def hill_climbing_DoublePlayfair(text, config_dict):
         T = FunctionT(T, count)
 
 if __name__ == '__main__':
-    print(random_split_keyword('CWGSZJVAPHB'))
+    # print(random_split_keyword('CWGSZJVAPHB'))
+    s = 'cosafjoamc'
+    print(s[:7])
