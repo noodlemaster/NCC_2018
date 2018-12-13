@@ -115,6 +115,7 @@ def double_playfair(text, keyword1, keyword2, TypeOfJoin = 'Horizontal'):  #type
     grid1, grid2 = form_grid(keyword1), form_grid(keyword2)
     plaintext = ''
     PlainText = re.sub(r'\W', '', text)
+    #print(len(PlainText))
     # text1 = re.sub('I','J', text) # NO I
     text1 = re.sub('J', 'I', PlainText).upper()  # NO J
     bigram_list = text_split_in_order(text1, 2)
@@ -135,19 +136,23 @@ def double_playfair(text, keyword1, keyword2, TypeOfJoin = 'Horizontal'):  #type
             # print(a, b, text_a, text_b)
             plaintext += text_a
             plaintext += text_b
-            # output = ''.join(plaintext)
-            # return output
     elif TypeOfJoin == 'Vertical' or TypeOfJoin == 'vertical':
         for each in bigram_list:
             a = each[0]
             b = each[1]
-            coord_b = get_coordinate(grid1, b)
-            coord_a = gridTObiggrid(grid1, get_coordinate(grid2, a), TypeOfJoin)
+            coord_a = get_coordinate(grid1, a)
+            coord_b = gridTObiggrid(grid1, get_coordinate(grid2, b), TypeOfJoin)
+            coord_b_2 = get_coordinate(grid1, b)
+            coord_a_2 = gridTObiggrid(grid1, get_coordinate(grid2, a), TypeOfJoin)
             #print(a, b, coord_a, coord_b)
             if coord_a[0] == coord_b[0]:  #On the same verticle line
                 pass
             if coord_a[0] != coord_b[0] and coord_a[1] != coord_b[1]:  #rectangle
-                coord_a, coord_b = rectangle_shift(coord_a, coord_b)[0], rectangle_shift(coord_a, coord_b)[1]
+                if coord_a_2[0] == coord_b_2[0]:
+                    coord_a, coord_b = coord_b, coord_a
+                else:
+                    coord_a, coord_b = rectangle_shift(coord_a, coord_b)[0], rectangle_shift(coord_a, coord_b)[1]
+
 
             text_a, text_b = biggrid[coord_a[1]][coord_a[0]], biggrid[coord_b[1]][coord_b[0]]
             # print(a, b, text_a, text_b)
@@ -162,40 +167,52 @@ def double_playfair_SA(text, keyword):
     return double_playfair(text, key1, key2)
 
 if __name__ == '__main__':
-    file = open('../../../questions/example/doubleplayfair_horizontal.txt')
+    #file = open('../../../questions/example/playfair_1.txt')
+    file = open('../../../questions/example/playfair_3.txt')
     text = file.read()
     file.close()
 
+    # config = {
+    #     'T0': 50,
+    #     'T_lowest': 0,
+    #     'NumberOfIterationPerT': 1000,
+    #     'FunctionT': T_mutilier,
+    #     'CipherType': playfair,
+    #     'Keyword/Grid': 'keyword',  #grid/keyword
+    #     'LengthOfKey_lower': 5,
+    #     'LengthOfKey_upper': 16,
+    #     'Probability_threshold': 0.85
+    # }
     config = {
-        'T0': 33,
-        'T_lowest': 0,
-        'NumberOfIterationPerT': 1000,
-        'FunctionT': T_minus,
-        'CipherType': playfair,
-        'Keyword/Grid': 'keyword',  #grid/keyword
-        'LengthOfKey_lower': 5,
-        'LengthOfKey_upper': 16,
-        'Probability_threshold': 0.8
-    }
-
-    config_double = {
-        'T0': 40,
+        'T0': 50,
         'T_lowest': 0,
         'NumberOfIterationPerT': 1000,
         'FunctionT': T_mutilier,
-        'CipherType': double_playfair_SA,
+        'CipherType': playfair,
+        'Keyword/Grid': 'keyword',  # grid/keyword
+        'LengthOfKey_lower': 5,
+        'LengthOfKey_upper': 16,
+        'Probability_threshold': 0.7
+    }
+
+    config_double = {
+        'T0': 60,
+        'T_lowest': 0,
+        'NumberOfIterationPerT': 500,
+        'FunctionT': T_mutilier,
+        'CipherType': double_playfair,
         'Keyword/Grid': 'keyword',  # grid/keyword
         'LengthOfKey_lower': 10,
         'LengthOfKey_upper': 19,
-        'Probability_threshold': 0.8
+        'Probability_threshold': 0.93
     }
-    # hill_climbing(text, config)
-    # print(get_english_score(playfair(text, 'KUPTVNXHLSCWBGDROFAJQEMYZ')))
+    hill_climbing(text, config)
+    # print(get_english_score(p##layfair(text, 'KUPTVNXHLSCWBGDROFAJQEMYZ')))
     #form_grid('FAOJBY')
-    # print(playfair(text, 'NIODLE'))
+    #print(playfair(text, 'RUSI'))
     #print(get_coordinate(generate_random_5x5grid(), 'R'))
     #form_grid('JHGCAY')
     #print(len(generate_random_5x5grid('J')))
-    # print(double_playfair_SA(text, 'KEY WORD'))
-    hill_climbing_DoublePlayfair(text, config_double)
-    # print(double_playfair(text, 'KEY', 'WORD'))
+    # print(double_playfair(text, 'KEY', 'WORD', 'vertical'))
+    # hill_climbing_DoublePlayfair(text, config_double)
+    #print(double_playfair(text, 'KEY', 'WORD'))

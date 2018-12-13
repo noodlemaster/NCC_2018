@@ -1,36 +1,8 @@
 from src.tools.hill_climbing import *
 
-# def random_change_keyword_length1(key):
-#     def add():
-#         i = random.randint(1, 25 - len(key))
-#         part = generate_random_keyword(1, i, get_existing_letter(key))
-#         l1 = list(set(list(part)))
-#         l = list(set(list(key)))
-#         for i in l1:
-#             for j in l:
-#                 if i == j:
-#                     i = random.choice(get_existing_letter(key))
-#         return ''.join(l1)
-#     def minus():
-#         i = random.randint(4, len(key)-2)
-#         return i
-#
-#     meth = ['add', 'minus']
-#     if len(key) < 9:
-#         return add() + key
-#     if len(key) > 22:
-#         return key[minus():]
-#     else:
-#         method = random.choice(meth)
-#         if method == 'add':
-#             return add() + key
-#         else:
-#             j = minus()
-#             return key[:j]
-
 def random_change_keyword_length1(key):
     def add():
-        i = random.randint(1, 25 - len(key))
+        i = random.randint(1, 24 - len(key))
         part = generate_random_keyword(1, i, get_existing_letter(key))
         l1 = list(set(list(part)))
         l = list(set(list(key)))
@@ -41,15 +13,18 @@ def random_change_keyword_length1(key):
         return key + ''.join(l1)
     def minus():
         i = random.randint(1, len(key) - 3)
-        return key[:i]
+        return key[i:]
+    if len(key) == 4:
+        return add()
     if len(key) < 4:
         return add()
     else:
-        method = random.choice(['add', 'minus'])
-        if method == 'add':
-            return add()
-        else:
-            return minus()
+        return minus()
+        # method = random.choice(['add', 'minus'])
+        # if method == 'add':
+        #     return add()
+        # else:
+        #     return minus()
 
 def random_minor_change1(type):
     if type == 'grid':
@@ -90,12 +65,14 @@ def hill_climbing_DoublePlayfair(text, config_dict):
     e = 2.71828182846
 
     PlainText = re.sub(r'\W', '', text)
-    if KeywordorGrid == 'grid':
-        parent_keyword = generate_random_5x5grid(deleted_letter = 'J')
-    else:
-        parent_keyword = generate_random_keyword(LengthOfKey_lower, LengthOfKey_upper, alphabets())
-        parent_keyword = random_split_keyword(parent_keyword)
-    parent_score = get_english_score(CipherType(PlainText, parent_keyword))
+    # if KeywordorGrid == 'grid':
+    #     parent_keyword = generate_random_5x5grid(deleted_letter = 'J')
+    # else:
+    parent_keyword_1 = generate_random_keyword(LengthOfKey_lower, LengthOfKey_upper, alphabets())
+    # parent_keyword = random_split_keyword(parent_keyword)
+    parent_keyword_2 = generate_random_keyword(LengthOfKey_lower, LengthOfKey_upper, alphabets())
+    parent_keyword = parent_keyword_1 + ' ' + parent_keyword_2
+    parent_score = get_english_score(CipherType(PlainText, parent_keyword_1, parent_keyword_2))
     #print(parent_score)
     highest_score = parent_score
     all_keys = []
@@ -106,28 +83,29 @@ def hill_climbing_DoublePlayfair(text, config_dict):
 
         while countOfinter <= NumberOfIterationPerT:
             meth = random_minor_change1(KeywordorGrid)
-            child_keyword = meth(parent_keyword.replace(' ', ''))
-            child_keyword = random_split_keyword(child_keyword)
+            child_keyword_1 = meth(parent_keyword.split(' ')[0])
+            child_keyword_2 = meth(parent_keyword.split(' ')[1])
+            child_keyword = child_keyword_1 + ' ' + child_keyword_2
             #print(child_keyword)
             if child_keyword not in all_keys:
-                all_keys.append(table2str(child_keyword))
-                resultText = CipherType(PlainText, child_keyword)
+                all_keys.append(child_keyword)
+                resultText = CipherType(PlainText, child_keyword_1, child_keyword_2)
                 child_score = get_english_score(resultText)
                 dF = child_score - parent_score
                 #print(child_score)
                 if dF >= 0:
                     displayscore = parent_score
-                    parent_keyword = child_keyword.replace(' ', '')
+                    parent_keyword = child_keyword
                     parent_score = child_score
                     if child_score > highest_score:
                         highest_score = child_score
-                    print('#Iteration: ' + str(count) + '  Keyword: ' + table2str(parent_keyword) + '  Score: ' + str(child_score) + ' Highest score: ' + str(highest_score) + '  Parent score:  ' + str(displayscore))
+                    print('#Iteration: ' + str(count) + '  Keyword: ' + parent_keyword + '  Score: ' + str(child_score) + ' Highest score: ' + str(highest_score) + '  Parent score:  ' + str(displayscore))
                 else:
                     prob = e**(dF/T)
                     if prob > Probability_threshold:
                         parent_keyword = child_keyword
                         parent_score = child_score
-                        print('#Iteration: ' + str(count) + '  Keyword: ' + table2str(parent_keyword) + '  Score: ' + str(parent_score) + '  Highest score: ' + str(highest_score) + '  Probability: ' + str(prob))
+                        print('#Iteration: ' + str(count) + '  Keyword: ' + parent_keyword + '  Score: ' + str(parent_score) + '  Highest score: ' + str(highest_score) + '  Probability: ' + str(prob))
                     # else:
                     #     print('#Iteration: ' + str(count) + '  Unsuccessful' + '  Probability: ' + str(prob) + ' ' + str(T) + ' ' + str(dF))
 
@@ -138,5 +116,5 @@ def hill_climbing_DoublePlayfair(text, config_dict):
 
 if __name__ == '__main__':
     # print(random_split_keyword('CWGSZJVAPHB'))
-    s = 'cosafjoamc'
-    print(s[:7])
+    s = 'cosa'
+    print(s[1:])
