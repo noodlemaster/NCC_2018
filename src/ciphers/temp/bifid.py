@@ -39,7 +39,7 @@ if __name__ == '__main__':
     file = open('../../../questions/2016/7b.txt')
     text = file.read()
     file.close()
-    print(bifid(text, "LIGO", 4, row_col=True))
+    # print(bifid(text, "LIGO", 4, row_col=True))
     config = {
         'T0': 33,
         'T_lowest': 0,
@@ -52,4 +52,4 @@ if __name__ == '__main__':
         'Probability_threshold': 0.8
     }
 
-    # hill_climbing(text, config)
+    hill_climbing(text, config)

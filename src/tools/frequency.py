@@ -88,7 +88,7 @@ def frequency_analysis(text):
 def sort_function(l):
   return l[1]
 
-def get_possible_index_of_e_t_from_frequency(text, affine=False, e=3, t=4):
+def get_possible_index_of_e_t_from_frequency(text, affine=False, e=1, t=4):
     probability = get_frequency(text.lower())
     sorted_probability = []
     for i in range(len(probability)):

@@ -13,8 +13,8 @@ def substitution(text, keyword):
 
 
 if __name__ == '__main__':
-    year = '2018'
-    question = '4b'
+    year = '2016'
+    question = '8b_4'
     file = open('../../../questions/' + year + '/' + question + '.txt', 'r')
     text = file.read()
     file.close()
@@ -26,9 +26,10 @@ if __name__ == '__main__':
         'FunctionT': T_mutilier,
         'CipherType': substitution,
         'Keyword/Grid': 'keyword',
-        'LengthOfKey_lower': 5,
-        'LengthOfKey_upper': 17,
-        'Probability_threshold': 0.8
+        'LengthOfKey_lower': 20,
+        'LengthOfKey_upper': 26,
+        'Probability_threshold': 0.8,
+        'Starting_Keyword': ''
     }
 
     hill_climbing(text, config)

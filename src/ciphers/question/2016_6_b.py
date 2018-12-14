@@ -16,9 +16,10 @@ original_text = ''.join(removespace(text))
 # print(get_english_score(newtext))
 # print(newtext)
 
-# a_possible = [1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, 25]
-a_possible = [15]
+a_possible = [1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, 25]
+# a_possible = [15]
 for a in a_possible:
+    print(a)
     newtext = decrypt_mapping(original_text, get_map_of_ax_plus_b(a, 0))
-    display_top_result(decipher_vigenere(newtext, k=15, affine=False, use_a=False, display=True, reverse=False, auto=False))
+    display_top_result(decipher_vigenere(newtext, k=7, affine=False, use_a=False, display=True, reverse=False, auto=True))
     print(newtext)

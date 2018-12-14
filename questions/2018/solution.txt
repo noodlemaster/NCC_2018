@@ -16,3 +16,5 @@
 8b: Vigenere cipher keyword=shadow
 9a: Vigenere cipher keyword=dynamite
 9b: Vigenere cipher keyword=yekrut (turkey) reverse
+10a: Binary Vigenere cipher keyword=binary
+10b:

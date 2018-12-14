@@ -1,8 +1,8 @@
 import re
-
 import time
 
 from src.tools.checkenglishness import get_english_score
+from src.tools.text_manipulation import extract_alphabets, removespace
 
 alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
             'V', 'W', 'X', 'Y', 'Z']
@@ -114,7 +114,7 @@ def hill_2x2(text):
 
     howmany = 5
 
-    for i in range(1, howmany+1):
+    for i in range(1, howmany + 1):
         highscore = sorted(top_score)[-i]
         index = top_score.index(highscore)
         if isinstance(index, int):
@@ -123,10 +123,11 @@ def hill_2x2(text):
 if __name__ == '__main__':
     start = time.time()
     # file = open('../../questions/example/hill2x2.txt', 'r') #Keyword: READ
-    year = '2016'
-    question = '8a'
+    year = '2017'
+    question = '8b_2'
     file = open('../../questions/' + year + '/' + question + '.txt', 'r')
     text = file.read()
     file.close()
+    text = ''.join(extract_alphabets(removespace(text)))
     hill_2x2(text)
     print(time.time() - start)

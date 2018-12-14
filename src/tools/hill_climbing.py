@@ -67,6 +67,26 @@ def random_reverse_column_5x5(grid):
     grid[0][i], grid[1][i], grid[3][i], grid[4][i] = grid[4][i], grid[3][i], grid[1][i], grid[0][i]
     return grid
 
+def flip_row_5x5(grid):
+    for j in range(5):
+        c = grid[j][0]
+        grid[j][0] = grid[j][4]
+        grid[j][4] = c
+        c = grid[j][1]
+        grid[j][1] = grid[j][3]
+        grid[j][3] = c
+    return grid
+
+def flip_column_5x5(grid):
+    for j in range(5):
+        c = grid[0][j]
+        grid[0][j] = grid[4][j]
+        grid[4][j] = c
+        c = grid[1][j]
+        grid[1][j] = grid[3][j]
+        grid[3][j] = c
+    return grid
+
 def random_swapping(key):
     l = list(key)
     i, j = random.randint(0, len(l)-1), random.randint(0, len(l)-1)
@@ -133,8 +153,8 @@ def random_change_keyword_length(key):
 
 def random_minor_change(type):
     if type == 'grid':
-        methods = [random_reverse_row_5x5, random_reverse_column_5x5, random_5x5grid]
-        meth = random.choices(methods, [0.25, 0.25, 0.5], k=1)
+        methods = [random_reverse_row_5x5, random_reverse_column_5x5, flip_row_5x5, flip_column_5x5, random_5x5grid]
+        meth = random.choices(methods, [0.15, 0.15, 0.15, 0.15, 0.4], k=1)
         return meth[0]
     else:
         methods = [reverse, random_substitution, random_change_keyword_length, random_substitution_n, random_swapping]
@@ -182,14 +202,17 @@ def hill_climbing(text, config_dict):
     LengthOfKey_lower = config_dict['LengthOfKey_lower']
     LengthOfKey_upper = config_dict['LengthOfKey_upper']
     Probability_threshold = config_dict['Probability_threshold']
+    Starting_Keyword = config_dict['Starting_Keyword']
     count = 1
     e = 2.71828182846
 
     PlainText = re.sub(r'\W', '', text)
     if KeywordorGrid == 'grid':
-        parent_keyword = generate_random_5x5grid(deleted_letter = 'I')
+        parent_keyword = generate_random_5x5grid(deleted_letter = 'J')
     else:
         parent_keyword = generate_random_keyword(LengthOfKey_lower, LengthOfKey_upper, alphabets())
+        if not Starting_Keyword == '':
+            parent_keyword = Starting_Keyword
     parent_score = get_english_score(CipherType(PlainText, parent_keyword))
     #print(parent_score)
     highest_score = parent_score

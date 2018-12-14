@@ -1,10 +1,19 @@
 import math
 
+from src.tools.index_of_coincidence import textksplit
+
 def removespace(text):
     textnospace = []
     for c in text:
         if c.isalpha():
             textnospace.append(c)
+    return textnospace
+
+def extract_alphabets(text):
+    textnospace = []
+    for c in text:
+        if c.isalpha():
+            textnospace.append(c.lower())
     return textnospace
 
 def groupcharactors(text, n):
@@ -64,11 +73,10 @@ def output_csv(split_text, name):
 if __name__ == '__main__':
     # text = "atadehterucesotdnasisylanarofscisnerofotdessapneebsahhcihwpotpalsronyartnoselifdetpyrcneehtnideniatnocebyamnoitamrofnitahtfollaroemostahteveilebewramladdnaronyartnitseretnignortsaevahyehtyhwdnatsrednuyllufewodronelledaticdnaximanydetacidnyssdpehtneewtebnoitcaretniehtfoerutcipraelcaevahtonodllitsewdnahtaedrehekafotdevirtnocramladwohdnatsrednutonodewnignisolcsitenehttahterawaebotylekilylhgihwonhtoberayehttahtdnaolsoraenronignivilhtoberayehttahteveilebewseiraidisbusstifoenoroelledaticybdetcetorpgniebhtoberadnarehtonaenohtiwnoitacinummocnierayehteveilebewramladailemajsiegatoofehtninamowehttahtdnaronyartnitramsitcepsusehttahtytniatrecraenhtiweveilebewsnoisulcnocecnallievrusnevesruofytnewtrednusiknabolsoehtdnaderotinomgnieberamrifwalehtmorfdnaotsllaclladehctawylesolcgniebsidnaknabehttaygolonhcetretupmocotsseccadesirohtuanuniegagneotycaripsnocfosegrahcgnidnepliabnodesaelersawtcepsusehtelledaticrerutcafunamsmraehtrofskrowhcihwmrifwalaotdegnolebgnarehtahtelibomehtdewohsecartllacallacehtekamotdewollaneebdahehlitnusnoitseuqeromynarewsnaotdesufertcepsusehttubreniaternoreywalaevahotevitcellocgnikcahaforebmemaroflausunusawtitahttuodetniopewreywalsihllacotdednamedyldetaeperdnadetatigaylhgihemacebtcepsusehtsihttuobadeksanehwnoitagitsevnirednudoirepehtgnirudhcnarbemasehttadeoedivnetfosawnoitpircsedsramladgnihctamnamowatahtdecitonoslaewrevewohweivretnitadebircsedehseitivitcaehthtiwdeillaterehtstisivsihtahtdewohssisylanarehtrufdnaknabsihtfoegatoofybboleveirterottneserewstnegahcnarbolsonanimihfoegatoofdahewtahteveilebotdemeesehgnirotinomneebdahewknabssiwsehtmorfknabtnereffidyleritnenatuobagniklatsawtcepsusehttahttnerappaemacebtirevewohgninoitseuqrehtrufrednuevitcellocehtybnekatneebdahnoitcarehtrufonosdnuofneebdahsessenkaewontahtdnaesicrexetahetihwasawtidemialcehsihtfoytilagelehttuobadegnellahcnehwytirucessknabehtfotsetnoitartenepecnaleerfanonoitidepxegnihsihpafotrapsaevitcellocehtfoflahebnodetisivdahehtahtdemialcehdnaknabafoybbolehtnimihfoegatoofdahewtahtdelaeverewredrahgnihsuphtuomotdnahgnivilenoemosrofffollewootebotderaeppaehtahttuodetniopewnehwneveevreserhsacsihtpekeherehwnialpxetondluowrotondluocehsihtnodesserpnehwtubtnuoccaknabaevahottondnasisabhsacanoyleritnekrowotdemialcehtsriftastnemegnarralaicnanifstcepsusehtotdenrutewknabssiwsehthtiwpihsnoitalersronyarttuobanwonkydaerlasawtahwlaeverottoneracgnikattituobaklatotderaperptonsawdnadnihebtahtllatfeldahehtahtdetatstcepsusehtdlihcasaerehtemitfotnuomaelbaredisnocatnepsehtseggusscitsiretcarahceciovtahttcafehtetipsedllatakuehthtiwsknilondnuofsgnignolebstcepsusehtfohcraesanoisserppofolootaerewsesabatadandtahtgnitatssisylanarofelpmasandaedivorpotstseuqerdesuferehnitramebotsemajdetcepsusewtahtlaevertondidewtubronyartnitramfodnatcepsusehtfoscirtemoibehtneewtebnoitalerrocfoeergedhgihadewohssisylanaseitirohtuaytisrevinuehthtiwtuodekcehcyrotssihletahcuenniecneicsretupmocniemmargorpetaudargamorftuopordaebotdemialcdnanitramsemajfoemanehtnistnemucodytitnediytilauqhgihgniyrracsawtcepsusehtsinmorfsperdnaasnimecnadnettanironyartnitramhtiwweivretnimorfseton"
     # print(reverse_text(text))
-    # print(textksplit(removespace(text), 4))
-    file = open('../../questions/2018/8a.txt', 'r')
+    file = open('../../questions/2018/10b_3.txt', 'r')
     text = file.read()
     file.close()
     # print(reverse_text(text))
     #Trasposition
-    # output_csv(text_k_split(removespace(text), 153), '../../questions/2018/6b/2018_6b_14')
-    output_csv(text_k_split(removespace(text), int(131*2*8/8)), '../../questions/2018/2018_8a_8')
+    # output_csv(text_split_in_order(removespace(text), 7), '../../questions/2018/10b/2018_10b_7')
+    # output_csv(text_k_split(removespace(text), int(math.ceil(6184/7))), '../../questions/2018/10b/2018_10b_7_c')

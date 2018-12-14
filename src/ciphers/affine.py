@@ -1,6 +1,7 @@
 import re
 from src.tools.checkenglishness import get_english_score
-from src.tools.frequency import frequency_analysis
+from src.tools.display import show_frequency
+from src.tools.frequency import frequency_analysis, get_possible_index_of_e_t_from_frequency
 from src.tools.text_manipulation import reverse_text
 
 alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
@@ -123,12 +124,11 @@ def decipher_x_plus_a_by_frequency(text):
         return False
 
 if __name__ == '__main__':
-    file = open('../../questions/2017/6b.txt', 'r', errors='replace')
+    file = open('../../questions/2018/10b_5.txt', 'r', errors='replace')
     text = file.read()
     file.close()
     #decipher_by_english_check(text)
     # print(decipher_x_plus_a_by_frequency(text))
-    # print(decipher_ax_plus_b_by_frequency(text))
     # print(decipher_by_english_check(text))
     # for i in range(11):
     # a_possible = [1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, 25]
@@ -138,4 +138,12 @@ if __name__ == '__main__':
     #         for l in ls:
     #             print(l[1], end=",")
     #         print("")
-    print(decrypt_mapping(text, get_map_of_ax_plus_b(15,0)))
+    # print(decrypt_mapping(text, get_map_of_ax_plus_b(15,0)))
+    show_frequency(False, True)
+    show_frequency(text, True)
+    possibile = get_possible_index_of_e_t_from_frequency(text, affine = True, e=2, t=4)
+    for p in possibile:
+        print(p)
+        dectext = decrypt_mapping(text, get_map_of_ax_plus_b(p[0][0], p[0][1]))
+        print(dectext)
+        show_frequency(dectext, True)

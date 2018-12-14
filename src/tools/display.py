@@ -2,12 +2,12 @@ from matplotlib import pyplot
 
 from src.tools.frequency import get_frequency, get_n_gram_frequency
 from src.tools.index_of_coincidence import get_average_ioc_from_1_to_k, get_first_ioc_from_1_to_k
-from src.tools.text_manipulation import reverse_text
+from src.tools.text_manipulation import reverse_text, extract_alphabets, removespace, text_split_in_order
 
 alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
             'V', 'W', 'X', 'Y', 'Z']
 
-def show_frequency(text, alp = True):
+def show_frequency(text, alp = True, title=''):
     if text:
         frequency = get_frequency(text)
     else:
@@ -16,7 +16,7 @@ def show_frequency(text, alp = True):
         file.close()
         for i in range(len(frequency)):
             frequency[i] = float(frequency[i].strip())/100
-    pyplot.title('Character frequency')
+    pyplot.title('Character frequency ' + str(title))
     list = []
     list_s = []
     for i in range(26):
@@ -73,18 +73,37 @@ def show_n_gram_frequency(text, n, top=10):
     pyplot.gca().invert_yaxis()
     pyplot.show()
 
+def check_two_same_letters(text):
+    text = ''.join(extract_alphabets(removespace(text)))
+    for a in alphabet:
+        num = text.find(a.lower() + a.lower())
+        if num != -1:
+            if num % 2 == 1:
+                print(a + a + ' False')
+            else:
+                print(a + a + ' True')
+    print('done')
+
+def two_letters_frequency(text):
+    text = ''.join(extract_alphabets(removespace(text)))
+    text_split_in_order(text, 2)
+
+
 if __name__ == '__main__':
-    year = '2017'
-    question = '8b_3'
+    year = '2018'
+    question = '10b_final'
     file = open('../../questions/' + year + '/' + question + '.txt', 'r')
+    # file = open('../../questions/example/ADFGVX.txt')
     text = file.read()
     file.close()
-    show_frequency(text, True)
     # text = reverse_text(text)
-    show_ioc(text, 50, True)
+    # show_frequency(text, True)
+    show_frequency(text, False, title=question)
+    # show_ioc(text, 50, True)
+    # show_ioc(text, 50, False)
     # show_n_gram_frequency(text, 2, top=20)
-    show_n_gram_frequency(text, 3, top=10)
-    # show_frequency(False, True)
+    # show_n_gram_frequency(text, 3, top=10)
+    show_frequency(False, True)
     # show_n_gram_frequency(False, 2, top=20)
     # show_n_gram_frequency(False, 3, top=10)
-
+    # check_two_same_letters(text)
