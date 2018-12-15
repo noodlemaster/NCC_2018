@@ -1,0 +1,21 @@
+   1= place/ all 1=
+1A 1161/1525   Caesar cipher
+1B 1, /902  2, 98/98  Caesar cipher
+2A 331/1264  Caesar cipher
+2B 217/837 Affine cipher
+3A 130/1040  Affine cipher
+3B 190/653  Keyword shift cipher
+4A 196/862  Keyword shift cipher
+4B 256/581  Keyword shift cipher
+5A 137/748  Keyword shift cipher
+5B 25/465  Keyword shift cipher and reverse
+6A 121/702  Keyword shift cipher
+6B 277/463 Transposition Cipher
+7A 247/636  Substitution cipher
+7B 48/232  Columnar Transposition Cipher
+8A 21/305  Columnar Transposition Cipher
+8B 11/322  Vigenere cipher
+9A 4/399  Vigenere cipher
+9B 26/305  Vigenere cipher and reverse
+10A        Bacon cipher and Vigenere cipher
+10B finished this by second deadline
